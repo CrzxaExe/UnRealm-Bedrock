@@ -9,9 +9,14 @@ import {
   system,
   world,
 } from "@minecraft/server";
-import { AdminPanel, Command, Entity, GuildPanel, StatusDecay, StatusTypes, Terra } from "../../module";
+import { AdminPanel, Command, GuildPanel, Item, StatusDecay, StatusTypes, Terra } from "../../module";
+import { ModifierTypes } from "../../enum/modifier";
 
 // Settings
+
+/**
+ * Open admin panel
+ */
 Command.add(
   {
     name: "cz:admin",
@@ -40,6 +45,10 @@ Command.add(
 );
 
 // Voxn
+
+/**
+ * Adding your or other user voxn
+ */
 Command.add(
   {
     name: "cz:addvoxn",
@@ -76,6 +85,10 @@ Command.add(
     }
   }
 );
+
+/**
+ * Take your or other user voxn
+ */
 Command.add(
   {
     name: "cz:minvoxn",
@@ -112,6 +125,10 @@ Command.add(
     }
   }
 );
+
+/**
+ * Set your or other user voxn
+ */
 Command.add(
   {
     name: "cz:setvoxn",
@@ -150,6 +167,10 @@ Command.add(
 );
 
 // Money
+
+/**
+ * Add your or other user balance
+ */
 Command.add(
   {
     name: "cz:addbal",
@@ -186,6 +207,10 @@ Command.add(
     }
   }
 );
+
+/**
+ * Take your or other user balance
+ */
 Command.add(
   {
     name: "cz:minbal",
@@ -222,6 +247,10 @@ Command.add(
     }
   }
 );
+
+/**
+ * Set your or other user balance
+ */
 Command.add(
   {
     name: "cz:setbal",
@@ -260,6 +289,9 @@ Command.add(
   }
 );
 
+/**
+ * Open guild admin panel
+ */
 Command.add(
   {
     name: "cz:guildadmin",
@@ -289,6 +321,9 @@ Command.add(
   }
 );
 
+/**
+ * Omit save event
+ */
 Command.add(
   {
     name: "cz:savedata",
@@ -313,6 +348,9 @@ Command.add(
   }
 );
 
+/**
+ * Apply status to your or other user
+ */
 Command.add(
   {
     name: "cz:addstatus",
@@ -323,9 +361,9 @@ Command.add(
       { name: "statusname", type: CustomCommandParamType.String },
       { name: "duration", type: CustomCommandParamType.Float },
       { name: "level", type: CustomCommandParamType.Integer },
-      { name: "cz:statustype", type: CustomCommandParamType.Enum },
+      { name: "type", type: CustomCommandParamType.Enum, enumName: "cz:statustype" },
       { name: "stackable", type: CustomCommandParamType.Boolean },
-      { name: "cz:statusdecay", type: CustomCommandParamType.Enum },
+      { name: "decay", type: CustomCommandParamType.Enum, enumName: "cz:statusdecay" },
     ],
   },
   (
@@ -340,7 +378,6 @@ Command.add(
   ): CustomCommandResult => {
     try {
       system.run(() => {
-        console.warn(JSON.stringify(target), name, duration, lvl, type, stack, decay);
         const actualTarget =
           world.getEntity(target?.id) || (world.getAllPlayers().find((e) => e.id === target.id) as mcEntity);
         if (!actualTarget) return;
@@ -351,6 +388,44 @@ Command.add(
           stack,
           decay: decay as StatusDecay,
         });
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    } catch (error: any) {
+      console.warn("[System] Error while run command " + error.message);
+      return {
+        status: CustomCommandStatus.Failure,
+      };
+    }
+  }
+);
+
+/**
+ * Apply modifier to item you holding in mainhand
+ */
+Command.add(
+  {
+    name: "cz:modifier",
+    description: "cmd.mod",
+    mandatoryParameters: [{ name: "modifier", type: CustomCommandParamType.Enum, enumName: "cz:modifiers" }],
+    optionalParameters: [{ name: "level", type: CustomCommandParamType.Integer }],
+    permissionLevel: CommandPermissionLevel.Admin,
+  },
+  (origin: CustomCommandOrigin, modifier: string, level: number = 1): CustomCommandResult => {
+    try {
+      system.run(() => {
+        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
+        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity?.id }) as Player;
+        if (!plyr) throw new Error("Not a origin player");
+
+        const item = plyr.getComponent("inventory")?.container.getItem(plyr.selectedSlotIndex);
+        if (!item) throw new Error("Not an item");
+
+        plyr.sendMessage({ translate: "system.modifier.apply", with: [modifier] });
+
+        new Item(item).addModifier(modifier as ModifierTypes, plyr, level);
       });
 
       return {

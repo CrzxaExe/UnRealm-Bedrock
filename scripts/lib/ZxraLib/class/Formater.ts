@@ -1,5 +1,5 @@
 import { Vector3 } from "@minecraft/server";
-import { GachaRarity, GuildData, rarityColor } from "../module";
+import { GachaRarity, rarityColor } from "../module";
 
 /**
  * Utility class to formating something to fancy text

@@ -9,18 +9,30 @@ import {
   system,
   world,
 } from "@minecraft/server";
-import { Command, CreateObject, Terra, UserPanel } from "../../module";
+import { Chat, Command, CreateObject, Iyura, Terra, UserPanel } from "../../module";
 
+/**
+ * Command to testing only
+ */
 Command.add(
   {
     name: "cz:test",
     description: "cmd.test",
     permissionLevel: CommandPermissionLevel.Any,
   },
-  (): CustomCommandResult => {
-    try {
-      world.sendMessage("Test");
+  (origin: CustomCommandOrigin): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
 
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
+    try {
+      system.run(() => {
+        world.sendMessage("Test");
+
+        new Iyura().ui(plyr);
+      });
       return {
         status: CustomCommandStatus.Success,
       };
@@ -34,6 +46,10 @@ Command.add(
 );
 
 // Gamemode
+
+/**
+ * Change gamemode to creative
+ */
 Command.add(
   {
     name: "cz:gmc",
@@ -41,28 +57,38 @@ Command.add(
     permissionLevel: CommandPermissionLevel.GameDirectors,
   },
   (origin: CustomCommandOrigin): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
+
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
     try {
       system.run(() => {
-        world.sendMessage("Set to creative mode");
-
-        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
-
-        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
-        if (!plyr) throw new Error("Not a origin player");
+        plyr.onScreenDisplay.setActionBar({
+          translate: "gameMode.changed",
+          with: { rawtext: [{ translate: "gameMode.creative" }] },
+        });
 
         plyr.setGameMode(GameMode.Creative);
       });
+
       return {
         status: CustomCommandStatus.Success,
       };
     } catch (error: any) {
-      console.warn("[System] Error while run command " + error.message);
+      plyr.sendMessage({ translate: "system.command.error", with: [error.message] });
       return {
         status: CustomCommandStatus.Failure,
+        message: "Run error",
       };
     }
   }
 );
+
+/**
+ * Change gamemode to survival
+ */
 Command.add(
   {
     name: "cz:gms",
@@ -70,14 +96,18 @@ Command.add(
     permissionLevel: CommandPermissionLevel.GameDirectors,
   },
   (origin: CustomCommandOrigin): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
+
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
     try {
       system.run(() => {
-        world.sendMessage("Set to survival mode");
-
-        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
-
-        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
-        if (!plyr) throw new Error("Not a origin player");
+        plyr.onScreenDisplay.setActionBar({
+          translate: "gameMode.changed",
+          with: { rawtext: [{ translate: "gameMode.survival" }] },
+        });
 
         plyr.setGameMode(GameMode.Survival);
       });
@@ -85,13 +115,18 @@ Command.add(
         status: CustomCommandStatus.Success,
       };
     } catch (error: any) {
-      console.warn("[System] Error while run command " + error.message);
+      plyr.sendMessage({ translate: "system.command.error", with: [error.message] });
       return {
         status: CustomCommandStatus.Failure,
+        message: "Run error",
       };
     }
   }
 );
+
+/**
+ * Change gamemode to adventure
+ */
 Command.add(
   {
     name: "cz:gma",
@@ -99,14 +134,18 @@ Command.add(
     permissionLevel: CommandPermissionLevel.GameDirectors,
   },
   (origin: CustomCommandOrigin): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
+
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
     try {
       system.run(() => {
-        world.sendMessage("Set to adventure mode");
-
-        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
-
-        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
-        if (!plyr) throw new Error("Not a origin player");
+        plyr.onScreenDisplay.setActionBar({
+          translate: "gameMode.changed",
+          with: { rawtext: [{ translate: "gameMode.adventure" }] },
+        });
 
         plyr.setGameMode(GameMode.Adventure);
       });
@@ -114,13 +153,18 @@ Command.add(
         status: CustomCommandStatus.Success,
       };
     } catch (error: any) {
-      console.warn("[System] Error while run command " + error.message);
+      plyr.sendMessage({ translate: "system.command.error", with: [error.message] });
       return {
         status: CustomCommandStatus.Failure,
+        message: "Run error",
       };
     }
   }
 );
+
+/**
+ * Change gamemode to spectator
+ */
 Command.add(
   {
     name: "cz:gmsp",
@@ -128,14 +172,18 @@ Command.add(
     permissionLevel: CommandPermissionLevel.GameDirectors,
   },
   (origin: CustomCommandOrigin): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
+
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
     try {
       system.run(() => {
-        world.sendMessage("Set to spectator mode");
-
-        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
-
-        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
-        if (!plyr) throw new Error("Not a origin player");
+        plyr.onScreenDisplay.setActionBar({
+          translate: "gameMode.changed",
+          with: { rawtext: [{ translate: "gameMode.spectator" }] },
+        });
 
         plyr.setGameMode(GameMode.Spectator);
       });
@@ -143,15 +191,20 @@ Command.add(
         status: CustomCommandStatus.Success,
       };
     } catch (error: any) {
-      console.warn("[System] Error while run command " + error.message);
+      plyr.sendMessage({ translate: "system.command.error", with: [error.message] });
       return {
         status: CustomCommandStatus.Failure,
+        message: "Run error",
       };
     }
   }
 );
 
 // Currency
+
+/**
+ * See your or other user balance
+ */
 Command.add(
   {
     name: "cz:bal",
@@ -160,15 +213,19 @@ Command.add(
     optionalParameters: [{ name: "target", type: CustomCommandParamType.PlayerSelector }],
   },
   (origin: CustomCommandOrigin, target: Player | Player[] | undefined): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
+
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
     try {
       system.run(() => {
-        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
-
         function run(target: Player) {
-          const plyr: Player = Terra.getPlayer({ id: target?.id || origin?.sourceEntity?.id }) as Player;
-          if (!plyr) throw new Error("Not a origin player");
+          const tg: Player = Terra.getPlayer({ id: target?.id || origin?.sourceEntity?.id }) as Player;
+          if (!tg) throw new Error("Origin not a player");
 
-          const data = Terra.getSpecialist(plyr.id) || CreateObject.createSpecialist(plyr);
+          const data = Terra.getSpecialist(tg.id) || CreateObject.createSpecialist(tg);
           plyr.sendMessage({ translate: "system.bal", with: [String(plyr.name), String(data.money)] });
         }
 
@@ -184,13 +241,18 @@ Command.add(
         status: CustomCommandStatus.Success,
       };
     } catch (error: any) {
-      console.warn("[System] Error while run command " + error.message);
+      plyr.sendMessage({ translate: "system.command.error", with: [error.message] });
       return {
         status: CustomCommandStatus.Failure,
+        message: "Run error",
       };
     }
   }
 );
+
+/**
+ * See your or other user voxn
+ */
 Command.add(
   {
     name: "cz:voxn",
@@ -198,31 +260,49 @@ Command.add(
     permissionLevel: CommandPermissionLevel.Any,
     optionalParameters: [{ name: "target", type: CustomCommandParamType.PlayerSelector }],
   },
-  (origin: CustomCommandOrigin, target: Player | undefined): CustomCommandResult => {
+  (origin: CustomCommandOrigin, target: Player | Player[] | undefined): CustomCommandResult => {
+    if (origin.sourceEntity?.typeId !== "minecraft:player")
+      return { status: CustomCommandStatus.Failure, message: "Not a player" };
+
+    const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+    if (!plyr) return { status: CustomCommandStatus.Failure, message: "Origin not a player" };
+
     try {
       system.run(() => {
-        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
+        function run(target: Player) {
+          const tg: Player = Terra.getPlayer({ id: target?.id || origin?.sourceEntity?.id }) as Player;
+          if (!tg) throw new Error("Origin not a player");
 
-        const plyr: Player = Terra.getPlayer({ id: target?.id || origin.sourceEntity.id }) as Player;
-        if (!plyr) throw new Error("Not a origin player");
+          const data = Terra.getSpecialist(tg.id) || CreateObject.createSpecialist(tg);
+          plyr.sendMessage({ translate: "system.voxn", with: [String(plyr.name), String(data.voxn)] });
+        }
 
-        const data = Terra.getSpecialist(plyr.id) || CreateObject.createSpecialist(plyr);
-        plyr.sendMessage({ translate: "system.voxn", with: [String(plyr.name), String(data.voxn)] });
+        if (Array.isArray(target)) {
+          target.forEach((e) => run(e));
+          return;
+        }
+
+        run(target ?? (origin.sourceEntity as Player));
       });
 
       return {
         status: CustomCommandStatus.Success,
       };
     } catch (error: any) {
-      console.warn("[System] Error while run command " + error.message);
+      plyr.sendMessage({ translate: "system.command.error", with: [error.message] });
       return {
         status: CustomCommandStatus.Failure,
+        message: "Run error",
       };
     }
   }
 );
 
 // Top
+
+/**
+ * See top balance in the world
+ */
 Command.add(
   {
     name: "cz:baltop",
@@ -237,8 +317,10 @@ Command.add(
 
         const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
         if (!plyr) throw new Error("Not a origin player");
+        const names = (Terra.getPlayer() as Player[]).map((r) => r.id);
 
         const data = Terra.specialist
+          .filter((e) => names.includes(e.id))
           .sort((a, b) => a.money - b.money)
           .map((e, i) => {
             const py = Terra.getPlayer({ id: e.id }) as Player;
@@ -260,6 +342,10 @@ Command.add(
     }
   }
 );
+
+/**
+ * See top voxn in the world
+ */
 Command.add(
   {
     name: "cz:voxntop",
@@ -298,6 +384,9 @@ Command.add(
   }
 );
 
+/**
+ * Open menu panel
+ */
 Command.add(
   {
     name: "cz:menu",
@@ -327,6 +416,9 @@ Command.add(
   }
 );
 
+/**
+ * Open guild panel
+ */
 Command.add(
   {
     name: "cz:guild",
@@ -356,6 +448,9 @@ Command.add(
   }
 );
 
+/**
+ * List all guild
+ */
 Command.add(
   {
     name: "cz:guildlist",
@@ -392,6 +487,9 @@ Command.add(
   }
 );
 
+/**
+ * See your or other user stats
+ */
 Command.add(
   {
     name: "cz:stats",
@@ -418,6 +516,111 @@ Command.add(
         if (!plyr) throw new Error("Not a origin player");
 
         UserPanel.userProfile(Terra.getPlayer({ id: origin.sourceEntity.id }) as Player, plyr);
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    } catch (error: any) {
+      console.warn("[System] Error while run command " + error.message);
+      return {
+        status: CustomCommandStatus.Failure,
+      };
+    }
+  }
+);
+
+/**
+ * Send user location to chat
+ */
+Command.add(
+  {
+    name: "cz:location",
+    description: "cmd.location",
+    permissionLevel: CommandPermissionLevel.Any,
+  },
+  (origin: CustomCommandOrigin): CustomCommandResult => {
+    try {
+      system.run(() => {
+        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
+
+        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+        if (!plyr) throw new Error("Not a origin player");
+
+        Chat.globalMessage(plyr, `${plyr.location.x} ${plyr.location.y} ${plyr.location.z}`);
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    } catch (error: any) {
+      console.warn("[System] Error while run command " + error.message);
+      return {
+        status: CustomCommandStatus.Failure,
+      };
+    }
+  }
+);
+
+/**
+ * Send chat to guild member only
+ */
+Command.add(
+  {
+    name: "cz:gc",
+    description: "cmd.gc",
+    permissionLevel: CommandPermissionLevel.Any,
+    mandatoryParameters: [{ name: "text", type: CustomCommandParamType.String }],
+  },
+  (origin: CustomCommandOrigin, ...text: string[]): CustomCommandResult => {
+    try {
+      system.run(() => {
+        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
+
+        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+        if (!plyr) throw new Error("Not a origin player");
+
+        Chat.guildMessage(plyr, text.join(" "));
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    } catch (error: any) {
+      console.warn("[System] Error while run command " + error.message);
+      return {
+        status: CustomCommandStatus.Failure,
+      };
+    }
+  }
+);
+
+/**
+ * Get your spawnpoint location and dimension
+ */
+Command.add(
+  {
+    name: "cz:getspanwpoint",
+    description: "cmd.psp",
+    permissionLevel: CommandPermissionLevel.Any,
+  },
+  (origin: CustomCommandOrigin): CustomCommandResult => {
+    try {
+      system.run(() => {
+        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
+
+        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+        if (!plyr) throw new Error("Not a origin player");
+        const location = plyr.getSpawnPoint();
+
+        const text = location
+          ? {
+              translate: "system.psp",
+              with: [String(location.x), String(location.y), String(location.z), String(location.dimension.id)],
+            }
+          : { translate: "system.notSpawnPoint" };
+
+        plyr.sendMessage(text);
       });
 
       return {

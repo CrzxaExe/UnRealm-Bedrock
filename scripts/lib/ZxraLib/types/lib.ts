@@ -9,7 +9,16 @@ import {
   ScriptEventSource,
   Vector3,
 } from "@minecraft/server";
-import { Currency, GuildData, NpcModels, Specialist, SpecialistData, StatusDecay, StatusTypes } from "../module";
+import {
+  Currency,
+  NpcModels,
+  Specialist,
+  SpecialistData,
+  StatusDecay,
+  StatusTypes,
+  ModifierTypes,
+  ModifierActiveActions,
+} from "../module";
 
 // Anti heal data
 type AntiHealData = {
@@ -73,7 +82,14 @@ interface LbData {
 
 // Modifier interface
 type ModifierData = TempNameWithCallback<Function> & {
-  type: string;
+  type: ModifierTypes;
+  action: ModifierActiveActions;
+};
+type ModifierStats = { stat: string; value: number };
+type Modifiers = { [key: string]: ModifierStats[][] };
+type ModifierList = {
+  name: string;
+  level: number;
 };
 
 // Quest interface
@@ -228,6 +244,7 @@ type ScriptParams = {
 // Setting interface
 interface Setting {
   rules?: SettingRules;
+  chainBreakFilter?: string[];
   customChat?: boolean;
   customChatPrefix?: string;
   damageIndicator?: boolean;
@@ -333,6 +350,10 @@ type WeaponAttribute = Pick<WeaponComponent, "id"> & {
   type: WeaponAttributetype;
 };
 type WeaponAttributetype = "handle";
+type WeaponStatLore = {
+  pasifs: ArrayFixedLength<number, 1, 2>;
+  skills: ArrayFixedLength<number, 2, 4>;
+};
 
 // World interface
 type WorldData = {
@@ -367,7 +388,10 @@ export type {
   LeaderboardData,
   LeaderboardSystemType,
   LeaderboardType,
+  Modifiers,
   ModifierData,
+  ModifierList,
+  ModifierStats,
   QuestConst,
   QuestController,
   QuestData,
@@ -405,6 +429,7 @@ export type {
   WeaponComponent,
   WeaponComponentData,
   WeaponComponentDataValue,
+  WeaponStatLore,
   WeaponSkill,
   WeaponStat,
   WorldData,

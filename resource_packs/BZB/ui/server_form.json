@@ -243,6 +243,62 @@
         }
       },
       {
+        "cz_form10@cz_common.iyura_panel_ui": {
+          "$title_panel": "common_dialogs.standard_title_label",
+          "$title_size": ["100% - 14px", 10],
+          "size": ["340px", "120px"],
+          "$text_name": "Iyura Ikkinami",
+          "$title_text_binding_type": "none",
+          "$child_control": "server_form.yuri_panel",
+          "$display": "textures/cz/art/iyura/skin/normal",
+          "layer": 2,
+          "alpha": 0.8,
+          "bindings": [
+            {
+              "binding_name": "#gamertag",
+              "binding_type": "collection",
+              "binding_collection_name": "players_collection"
+            },
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#title_text = 'cz:iyura_menu0')",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
+        "cz_form11@cz_common.iyura_panel_ui": {
+          "$title_panel": "common_dialogs.standard_title_label",
+          "$title_size": ["100% - 14px", 10],
+          "size": ["340px", "120px"],
+          "$text_name": "Iyura Ikkinami",
+          "$title_text_binding_type": "none",
+          "$child_control": "server_form.yuri_panel",
+          "$display": "textures/cz/art/iyura/skin/normal_1",
+          "layer": 2,
+          "alpha": 0.8,
+          "bindings": [
+            {
+              "binding_name": "#gamertag",
+              "binding_type": "collection",
+              "binding_collection_name": "players_collection"
+            },
+            {
+              "binding_name": "#title_text"
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(#title_text = 'cz:iyura_menu1')",
+              "target_property_name": "#visible"
+            }
+          ]
+        }
+      },
+      {
         "cz_form@common_dialogs.main_panel_no_buttons": {
           "$title_panel": "common_dialogs.standard_title_label",
           "$title_size": ["100% - 14px", 10],
@@ -257,7 +313,7 @@
             },
             {
               "binding_type": "view",
-              "source_property_name": "((#title_text - 'cz:npc_shop_farmer') and (#title_text - 'cz:skins') and (#title_text - 'cz:rune')  and (#title_text - 'cz:shop') and (#title_text - 'cz:quest') and (#title_text - 'cz:guild_shop') and (#title_text - 'cz:yuri_menu0') and (#title_text - 'cz:yuri_menu1') and (#title_text - 'cz:yuri_menu2') and (#title_text - 'cz:user') = #title_text)",
+              "source_property_name": "((#title_text - 'cz:npc_shop_farmer') and (#title_text - 'cz:skins') and (#title_text - 'cz:rune')  and (#title_text - 'cz:shop') and (#title_text - 'cz:quest') and (#title_text - 'cz:guild_shop') and (#title_text - 'cz:yuri_menu0') and (#title_text - 'cz:yuri_menu1') and (#title_text - 'cz:iyura_menu0') and (#title_text - 'cz:iyura_menu1') and (#title_text - 'cz:yuri_menu2') and (#title_text - 'cz:user') = #title_text)",
               "target_property_name": "#visible"
             }
           ]

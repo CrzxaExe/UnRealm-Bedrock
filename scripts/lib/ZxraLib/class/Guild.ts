@@ -1,6 +1,6 @@
 import { Player } from "@minecraft/server";
-import { CreateObject, GuildData, GuildMember, GuildRole } from "../module";
 import { Terra } from "./Terra";
+import { CreateObject } from "./CreateDefault";
 
 /**
  * Services class to handle guild request

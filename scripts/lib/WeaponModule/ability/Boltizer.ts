@@ -104,6 +104,7 @@ class Boltizer {
       skill = weaponData.unique.boltizer.skillLvl[0][data.skillLvl[0]];
 
     if (!sp.cooldown.canSkill("boltizer_skill1", skill.find((e) => e.name === "cooldown")!.value || 5)) return;
+    sp.minStamina(skill?.find((e) => e.name === "stamina")!.value || 14);
     sp.playAnim("animation.weapon.boltizer.skill1");
 
     sp.bind(1.67);
@@ -134,28 +135,35 @@ class Boltizer {
       return;
     }
     if (!sp.cooldown.canSkill("boltizer_skill3", skill.find((e) => e.name === "cooldown")!.value || 20)) return;
+    sp.minStamina(skill?.find((e) => e.name === "stamina")!.value || 26);
 
     sp.playAnim("animation.weapon.boltizer.skill3");
     let loc = { ...target.entity.location };
 
-    sp.bind(1.92);
+    sp.bind(1.91);
+    sp.knockback(user.getVelocity(), 0, 0.2);
+    user.triggerEvent("cz:ghost");
 
     system.runTimeout(() => {
       for (let i = 0; i < 3; i++) {
-        system.runTimeout(() => {
-          user.dimension.spawnEntity("minecraft:lightning_bolt", loc);
+        system.runTimeout(
+          () => {
+            user.dimension.spawnEntity("minecraft:lightning_bolt", loc);
 
-          if (!target.entity) return;
-          this.pasif2(
-            user,
-            Terra.getEntityCache(target.entity).getChainedEntityFromDistance(5, 3, [user.id]),
-            skill.find((e) => e.name === "atk_percentage")?.value ?? 2.2,
-            data,
-            multiplier,
-            "skill"
-          );
-        }, i + 6 * i);
+            if (!target.entity) return;
+            this.pasif2(
+              user,
+              Terra.getEntityCache(target.entity).getChainedEntityFromDistance(5, 3, [user.id]),
+              skill.find((e) => e.name === "atk_percentage")?.value ?? 2.2,
+              data,
+              multiplier,
+              "skill"
+            );
+          },
+          i + 6 * i
+        );
       }
+      user.triggerEvent("cz:no_ghost");
     }, 23);
   }
 }

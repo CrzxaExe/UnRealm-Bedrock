@@ -3,7 +3,7 @@ import { Specialist, SpecialistWeaponPlayer, Terra } from "../../ZxraLib/module"
 import { weaponData, weaponRaw } from "../module";
 
 class Bringer {
-  static pasif1(
+  static pasif(
     user: Player,
     sp: Specialist,
     weapon: SpecialistWeaponPlayer = Terra.getSpecialist(user.id)?.weapons.find((e) => e.weapon === "bringer") ??

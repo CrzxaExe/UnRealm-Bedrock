@@ -9,6 +9,7 @@ import {
   npcFile,
   Parser,
   PityPlayer,
+  settings,
   SpecialistData,
   Terra,
   WeaponComponent,
@@ -135,6 +136,15 @@ class CreateObject {
     data.skins = defaultModels.models.skins;
     data.components = defaultModels.models.components;
     return data;
+  }
+
+  /**
+   * Create default settings data
+   *
+   * @returns cloned settings object
+   */
+  static createSettings(): typeof settings {
+    return Parser.clone(settings) as typeof settings;
   }
 }
 

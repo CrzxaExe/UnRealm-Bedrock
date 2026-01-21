@@ -755,8 +755,32 @@ class Entity {
     if (entity.length > 0) return entity[0].entity.location;
 
     const block = this.source.getBlockFromViewDirection({ maxDistance: distance })?.block;
-    if (block) return block.location;
+    if (block) return { ...block.location, y: block.location.y + 1.2 };
 
+    const origin = this.source.location;
+    const yaw = (this.source.getRotation().y * Math.PI) / 180;
+    const pitch = (this.source.getRotation().x * Math.PI) / 180;
+
+    const forward = {
+      x: -Math.sin(yaw) * Math.cos(pitch),
+      y: -Math.sin(pitch),
+      z: Math.cos(yaw) * Math.cos(pitch),
+    };
+
+    return {
+      x: origin.x + forward.x * distance,
+      y: origin.y + forward.y * distance,
+      z: origin.z + forward.z * distance,
+    };
+  }
+
+  /**
+   * Get the location in front of this entity at the given distance, based on its rotation.
+   *
+   * @param distance default 6
+   * @returns Vector3
+   */
+  getForwardLocation(distance: number = 6): Vector3 {
     const origin = this.source.location;
     const yaw = (this.source.getRotation().y * Math.PI) / 180;
     const pitch = (this.source.getRotation().x * Math.PI) / 180;

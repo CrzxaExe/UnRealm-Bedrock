@@ -9,6 +9,8 @@ import {
   PasifKill,
   Scripts,
   WeaponSkill,
+  ModifierTypes,
+  ModifierActiveActions,
 } from "../module";
 
 //  Command class
@@ -86,18 +88,49 @@ class Modifier {
    * @param type weapon type of modifier
    * @param callback will be execute when modifier has been trigger
    */
-  static add(name: string, type: string, callback: Function) {
-    this.mod.push({ name, type, callback });
+  static add(name: string, type: ModifierTypes, action: ModifierActiveActions, callback: Function) {
+    this.mod.push({ name, type, action, callback });
   }
 
   /**
    * Get modifer by type
    *
-   * @param type name of modifier
+   * @param type type of modifier
    * @returns ModifierData | undefined
    */
-  static getType(type: string): ModifierData | undefined {
-    return this.mod.find((e) => e.type === type);
+  static getType(type: ModifierTypes): ModifierData[] {
+    return this.mod.filter((e) => e.type === type);
+  }
+
+  /**
+   * Get modifer by action
+   *
+   * @param action action of modifier
+   * @returns ModifierData | undefined
+   */
+  static getAction(action: ModifierActiveActions): ModifierData[] {
+    return this.mod.filter((e) => e.action === action);
+  }
+
+  /**
+   * Get modifer by type and action
+   *
+   * @param type type of modifier
+   * @param action action of modifier
+   * @returns ModifierData | undefined
+   */
+  static getTypeAction(type: ModifierTypes, action: ModifierActiveActions): ModifierData[] {
+    return this.mod.filter((e) => e.type === type && e.action === action);
+  }
+
+  /**
+   * Get modifer by name
+   *
+   * @param name name of modifier
+   * @returns ModifierData | undefined
+   */
+  static get(name: string): ModifierData | undefined {
+    return this.mod.find((e) => e.name === name);
   }
 }
 

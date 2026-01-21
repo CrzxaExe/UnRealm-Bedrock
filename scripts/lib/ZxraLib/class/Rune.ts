@@ -45,12 +45,26 @@ class Rune {
     data.runes.push(rune);
     this.sp.setSp(data);
   }
+
+  /**
+   * Check if user has specific rune
+   *
+   * @param name name of the rune
+   * @param data Specialist data
+   * @returns boolean
+   */
   hasRune(name: string, data: SpecialistData = this.sp.getSp()): boolean {
     if (name === "") throw new Error("Missing name");
 
     return data.runes.some((e) => e.name === name);
   }
 
+  /**
+   * Equip rune
+   *
+   * @param name name of the rune
+   * @param data Specialist data
+   */
   equipRune(name: string, data: SpecialistData = this.sp.getSp()): void {
     if (name === "") throw new Error("Missing name");
 
@@ -61,11 +75,26 @@ class Rune {
 
     this.sp.setSp(data);
   }
+
+  /**
+   * Check if player has equip specific rune
+   *
+   * @param name name of the rune
+   * @param data Specialist data
+   * @returns boolean
+   */
   hasEquipRune(name: string, data: SpecialistData = this.sp.getSp()): boolean {
     if (name === "") throw new Error("Missing name");
 
     return data.equippedRune.some((e) => e === name);
   }
+
+  /**
+   * Unequip rune
+   *
+   * @param name name of the rune
+   * @param data Specialist data
+   */
   unequipRune(name: string, data: SpecialistData = this.sp.getSp()): void {
     if (name === "") throw new Error("Missing name");
 
@@ -77,8 +106,12 @@ class Rune {
     this.sp.setSp(data);
   }
 
+  /**
+   * Get your rune statistic detail
+   *
+   * @returns RuneStats
+   */
   getRuneStat(): RuneStats {
-    // Clone defaultRuneStat to avoid mutating the original and ensure correct typing
     const data: RuneStats = { ...defaultRuneStat };
 
     this.getRune().forEach((e) => {
@@ -98,6 +131,13 @@ class Rune {
 
     return data;
   }
+
+  /**
+   * Get rune active stats callback
+   *
+   * @param type type of action
+   * @returns Function[]
+   */
   getRuneActiveStat(type: "onKill" | "onHit" | "onAttacked"): Function[] {
     const data = this.getRune();
 

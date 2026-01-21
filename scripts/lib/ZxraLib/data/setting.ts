@@ -1,6 +1,29 @@
 import { Setting } from "../module";
 
 export const settings: Setting = {
+  // chain break modifier block list.
+  chainBreakFilter: [
+    "cz:chlorophyte_ore",
+    "cz:dexterite_ore",
+    "cz:ender_ore",
+    "minecraft:ancient_debris",
+    "minecraft:coal_ore",
+    "minecraft:copper_ore",
+    "minecraft:diamond_ore",
+    "minecraft:deepslate_coal_ore",
+    "minecraft:deepslate_copper_ore",
+    "minecraft:deepslate_diamond_ore",
+    "minecraft:deepslate_emerald_ore",
+    "minecraft:deepslate_gold_ore",
+    "minecraft:deepslate_iron_ore",
+    "minecraft:deepslate_lapis_ore",
+    "minecraft:deepslate_redstone_ore",
+    "minecraft:emerald_ore",
+    "minecraft:gold_ore",
+    "minecraft:iron_ore",
+    "minecraft:lapis_ore",
+    "minecraft:redstone_ore",
+  ],
   // chat settings
   customChat: true,
   /* placeholder for custom chat prefix

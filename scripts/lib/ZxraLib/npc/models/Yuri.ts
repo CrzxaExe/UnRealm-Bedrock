@@ -1,6 +1,6 @@
 import { Entity as mcEntity, Player } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { CreateObject, Entity, EntityData, npcFile, YuriConst } from "../../module";
+import { CreateObject, Entity, EntityData, npcFile, Terra, YuriConst } from "../../module";
 
 interface Yuri {
   source: mcEntity;
@@ -26,6 +26,27 @@ class Yuri {
     const yuri: YuriConst = npcFile.yuri;
     const randomGreet: string = yuri.data.greet[Math.floor(Math.random() * yuri.data.greet.length)];
 
+    const sp = Terra.getSpecialistCache(player);
+
+    const direction = {
+      x: player.location.x - this.source.location.x,
+      y: player.location.y - this.source.location.y,
+      z: player.location.z - this.source.location.z,
+    };
+    const length = Math.sqrt(direction.x ** 2 + direction.y ** 2 + direction.z ** 2);
+    if (length > 0) {
+      direction.x /= length;
+      direction.y /= length;
+      direction.z /= length;
+    }
+    const location = {
+      x: this.source.location.x + direction.x * 2,
+      y: this.source.location.y + direction.y * 2 + 1.34,
+      z: this.source.location.z + direction.z * 2,
+    };
+
+    sp.setCameraToEntity(location, this.source);
+
     new ActionFormData()
       .title(`cz:yuri_menu${String(this.source.getComponent("variant")?.value || 0)}`)
       .body({ text: randomGreet })
@@ -36,12 +57,15 @@ class Yuri {
 
       .show(player)
       .then((e) => {
-        if (e.canceled) return;
+        if (e.canceled) return sp.clearCamera();
 
         switch (e.selection) {
           case 0:
             this.actionUi(player);
             break;
+          default: {
+            sp.clearCamera();
+          }
         }
       });
   }
@@ -55,7 +79,7 @@ class Yuri {
       .button({ translate: "yuri.scale" })
       .show(player)
       .then((e) => {
-        if (e.canceled) return;
+        if (e.canceled) return Terra.getSpecialistCache(player).clearCamera();
 
         switch (e.selection) {
           case 1:
@@ -64,6 +88,9 @@ class Yuri {
           case 2:
             this.scaleUi(player);
             break;
+          default: {
+            Terra.getSpecialistCache(player).clearCamera();
+          }
         }
       });
   }
@@ -78,7 +105,7 @@ class Yuri {
 
       .show(player)
       .then((e) => {
-        if (e.canceled) return;
+        if (e.canceled) return Terra.getSpecialistCache(player).clearCamera();
 
         const scaleEvents: string[] = ["cz:size_loli", "cz:size_n", "cz:size_p"];
         const scaleEvent =
@@ -86,8 +113,9 @@ class Yuri {
             ? scaleEvents[e.selection]
             : undefined;
 
-        if (!scaleEvent) return;
+        if (!scaleEvent) return Terra.getSpecialistCache(player).clearCamera();
         this.source.triggerEvent(scaleEvent);
+        Terra.getSpecialistCache(player).clearCamera();
       });
   }
 
@@ -101,7 +129,7 @@ class Yuri {
 
       .show(player)
       .then((e) => {
-        if (e.canceled) return;
+        if (e.canceled) return Terra.getSpecialistCache(player).clearCamera();
 
         const skinsEvents: string[] = [
           "cz:change_to_normal_skin",
@@ -113,8 +141,9 @@ class Yuri {
             ? skinsEvents[e.selection]
             : undefined;
 
-        if (!skinEvent) return;
+        if (!skinEvent) return Terra.getSpecialistCache(player).clearCamera();
         this.source.triggerEvent(skinEvent);
+        Terra.getSpecialistCache(player).clearCamera();
       });
   }
 }

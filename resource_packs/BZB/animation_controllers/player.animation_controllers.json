@@ -6,6 +6,8 @@
       "states": {
         "first_person": {
           "animations": [
+            "first_person_base_pose",
+            "first_person_breathing_bob",
             {
               "first_person_swap_item": "!query.blocking"
             },
@@ -13,9 +15,8 @@
               "first_person_shield_block": "query.blocking"
             },
             {
-              "first_person_attack_controller": "variable.attack_time > 0.0f && query.get_equipped_item_name != 'filled_map'"
+              "first_person_attack_controller": "variable.attack_time > 0.0 && query.get_equipped_item_name != 'filled_map' && !variable.melee_spear_equipped"
             },
-            "first_person_base_pose",
             {
               "first_person_empty_hand": "query.get_equipped_item_name(0, 1) != 'filled_map'"
             },
@@ -27,6 +28,9 @@
             },
             {
               "first_person_crossbow_equipped": "query.get_equipped_item_name == 'crossbow' && (variable.item_use_normalized > 0 && variable.item_use_normalized < 1.0)"
+            },
+            {
+              "first_person_melee_spear_controller": "variable.melee_spear_equipped"
             },
             {
               "first_person_breathing_bob": "variable.attack_time <= 0.0"
@@ -80,6 +84,15 @@
             "move.arms",
             "move.legs",
             "cape",
+            {
+              "riding.root": "query.is_riding"
+            },
+            {
+              "riding.arms": "query.is_riding"
+            },
+            {
+              "riding.legs": "query.is_riding"
+            },
             "holding",
             "tpp_init",
             {
@@ -98,13 +111,19 @@
               "damage_nearby_mobs": "variable.damage_nearby_mobs"
             },
             {
-              "swimming": "variable.swim_amount > 0.0"
+              "swimming": "variable.swim_amount > 0.0 && !variable.melee_spear_equipped"
+            },
+            {
+              "swimming.no_right_arm": "variable.swim_amount > 0.0 && variable.melee_spear_equipped"
             },
             {
               "swimming.legs": "variable.swim_amount > 0.0"
             },
             {
-              "crawling": "query.is_crawling"
+              "crawling": "query.is_crawling && !variable.melee_spear_equipped"
+            },
+            {
+              "crawling.no_right_arm": "query.is_crawling && variable.melee_spear_equipped"
             },
             {
               "crawling.legs": "query.is_crawling"
@@ -116,10 +135,10 @@
               "sleeping": "query.is_sleeping && query.is_alive"
             },
             {
-              "attack.positions": "variable.attack_time >= 0.0"
+              "attack.positions": "variable.attack_time >= 0.0 && !variable.melee_spear_equipped"
             },
             {
-              "attack.rotations": "variable.attack_time >= 0.0"
+              "attack.rotations": "variable.attack_time >= 0.0 && !variable.melee_spear_equipped"
             },
             "shield_blocking_controll",
             {
@@ -139,6 +158,9 @@
             },
             {
               "holding_heavy_core": "query.is_item_name_any('slot.weapon.mainhand', 'minecraft:heavy_core')"
+            },
+            {
+              "third_person_melee_spear_controller": "variable.melee_spear_equipped"
             }
           ],
           "transitions": [

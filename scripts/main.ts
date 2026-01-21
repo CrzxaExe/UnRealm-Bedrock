@@ -2,6 +2,7 @@ import { Dimension, Player, system, world } from "@minecraft/server";
 import { NOT_ALLOWED_ENTITY_TICK, Terra, ZxraLib } from "./lib/ZxraLib/module";
 
 // Event imports
+import "./lib/event/breakPlaceBlock";
 import "./lib/event/chatSend";
 import "./lib/event/entityAction";
 import "./lib/event/entityActivity";
@@ -19,7 +20,7 @@ console.warn(`
 [System] Loading plugins:
 Better Zxra Bedrock v${ZxraLib.packVersion}`);
 
-Terra.setup();
+// Terra.setup();
 
 if (Terra.world.setting?.debug) console.warn(JSON.stringify(Terra.world));
 if (Terra.world.setting?.useBzbRules) {
@@ -39,6 +40,7 @@ if (Terra.world.setting?.useBzbRules) {
 function mainTick(): void {
   try {
     //  Activity tick
+
     if (system.currentTick % 5 === 0) {
       Terra.players.forEach((player: Player) => {
         const sp = Terra.getSpecialistCache(player);

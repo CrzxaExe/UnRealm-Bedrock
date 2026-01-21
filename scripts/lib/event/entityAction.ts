@@ -7,7 +7,17 @@ import {
   Player,
   world,
 } from "@minecraft/server";
-import { damageColor, Formater, Quest, Terra, Weapon } from "../ZxraLib/module";
+import {
+  damageColor,
+  Formater,
+  Item,
+  Modifier,
+  ModifierActiveActionsEnum,
+  modifierDataList,
+  Quest,
+  Terra,
+  Weapon,
+} from "../ZxraLib/module";
 
 // Entity Killed event
 world.afterEvents.entityDie.subscribe(
@@ -84,6 +94,20 @@ world.afterEvents.entityHitEntity.subscribe(
     sp.cooldown.addCd("stamina_regen", Terra.world.setting?.staminaExhaust || 3);
     sp.minStamina(Terra.world.setting?.staminaAction || 4);
     if (!item || hitEntity == undefined || !hitEntity) return;
+
+    const itm = new Item(item);
+    const modifer = itm.getModifierByAction(ModifierActiveActionsEnum.AfterHit);
+
+    modifer.forEach((e) => {
+      const mod = Modifier.get(e.name);
+
+      if (!mod || mod.action !== ModifierActiveActionsEnum.AfterHit) return;
+      mod.callback(damagingEntity, hitEntity, {
+        item,
+        level: e.level,
+        mod: modifierDataList[mod.type][e.name][(e.level ?? 1) - 1],
+      });
+    });
 
     try {
       sp.rune.getRuneActiveStat("onHit").forEach((e) => e?.(damagingEntity, hitEntity));

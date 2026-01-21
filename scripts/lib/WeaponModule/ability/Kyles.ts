@@ -13,8 +13,6 @@ class Kyle {
     return weapon.pasifLvl[0][lvl.pasifLvl[0]].find((e) => e.name === "zelxt_mode_multiplier")!.value;
   }
 
-  static pasif2(user: Player): void {}
-
   static skill1(user: Player, { sp, vel, velocity, multiplier }: SkillLib): void {
     const data = sp.getSp().weapons.find((e) => e.weapon === "kyles") || weaponRaw.unique.kyles,
       skill = weaponData.unique.kyles.skillLvl[0][data.skillLvl[0]],
@@ -210,13 +208,12 @@ class Kyle {
     sp.source.triggerEvent("cz:immune_300ms");
 
     sp.cooldown.setIsSkill(0.5);
+    user.teleport(location, { checkForBlocks: true, rotation: user.getRotation() });
 
     system.runTimeout(() => {
-      user.teleport(location, { checkForBlocks: true });
-
       const target = sp.getEntityWithinRadius(3);
 
-      target.forEach((e) => {
+      target.forEach((e: mcEntity) => {
         if (!e) return;
         Terra.getEntityCache(e).addDamage(
           data.atk * skill?.find((e) => e.name === "zelxt_atk_percentage")!.value +

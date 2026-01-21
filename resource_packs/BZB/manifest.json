@@ -4,27 +4,15 @@
     "description": "[Forgery Update]\nRpg Addon for enchant your Journey\nLanguage Support Indonesian & US\n\nEngine Vers: v2.8.7\nUI Version   : v1.1.0\n@Zxra",
     "name": "§l§b[Project]§r Better Zxra Bedrock",
     "uuid": "7bf5a206-3893-43a8-a836-2aa23370bbf1",
-    "version": [
-      1,
-      1,
-      2
-    ],
-    "min_engine_version": [
-      1,
-      17,
-      0
-    ]
+    "version": [1, 1, 2],
+    "min_engine_version": [1, 21, 130]
   },
   "modules": [
     {
       "description": "Zxra Api",
       "type": "resources",
       "uuid": "f9b8d7f4-4a3b-4c64-8cea-80594fe050bb",
-      "version": [
-        1,
-        1,
-        2
-      ]
+      "version": [1, 1, 2]
     }
   ]
 }

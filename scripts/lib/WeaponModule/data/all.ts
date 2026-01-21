@@ -394,6 +394,12 @@ export const legend: { [key: string]: SpecialistWeapon } = {
       ],
     ],
   },
+  lighter: {
+    weapon: "lighter",
+    atk: 10,
+    pasifLvl: [[[{ name: "atk_percentage", value: 2.5 }]]],
+    skillLvl: [[], []],
+  },
 };
 
 export const rare: { [key: string]: SpecialistWeapon } = {};

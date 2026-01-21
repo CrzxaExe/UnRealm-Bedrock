@@ -12,6 +12,7 @@ system.beforeEvents.startup.subscribe(
   ({ customCommandRegistry, blockComponentRegistry, itemComponentRegistry }: StartupEvent) => {
     console.warn("[System] Start loading custom features");
 
+    Terra.setup();
     Terra.setupCommandEnums(customCommandRegistry, commandEnums);
     Terra.setupCommand(customCommandRegistry);
     Terra.setupBlockComponent(blockComponentRegistry);

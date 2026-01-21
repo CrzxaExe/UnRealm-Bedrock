@@ -76,6 +76,7 @@
           "type": "panel",
           "$fit_to_width": true,
           "size": ["100%c - 24px", "100%c + 4px"],
+          "min_size": ["60px", "5px"],
           "offset": ["-8px", "10px"],
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -157,8 +158,8 @@
   "player_position": {
     "type": "image",
     "size": ["100%c + 12px", "100%c + 6px"],
-    "texture": "textures/cz/banners/clear_purple",
-    "alpha": 1,
+    "texture": "textures/cz/button/button_invisible",
+    "alpha": 0,
     "controls": [
       {
         "player_position_text": {

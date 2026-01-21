@@ -15,23 +15,19 @@ import {
   BossChallengeData,
   Command,
   CommandData,
-  CommandEnumTypeStrict,
   CreateObject,
   Entity,
   EntityData,
   FullWorldData,
   Guild,
-  GuildData,
   ItemRegister,
   ItemRegisterData,
   Leaderboard,
   LeaderboardData,
-  Parser,
   PityPlayer,
   PlayerFinder,
   PluginsData,
   RedeemData,
-  settings,
   Specialist,
   SpecialistData,
   SpecialItem,
@@ -67,9 +63,22 @@ class Terra {
    * @param def  default value if the property are not present
    * @returns Object
    */
-  static getProperty(namespace: string = "world", def: Object = {}): Object {
-    const property: string = world.getDynamicProperty(namespace) as string;
-    let result: Object = JSON.parse(property) || def;
+  static getProperty(namespace: string = "world", def: any = {}): Object {
+    const property: string | undefined = world.getDynamicProperty(namespace) as string | undefined;
+    let result: Object = property ? (JSON.parse(property) ?? def) : def;
+
+    // If result is an empty object and def is not, use def
+    if (
+      typeof result === "object" &&
+      result !== null &&
+      Object.keys(result).length === 0 &&
+      typeof def === "object" &&
+      def !== null &&
+      Object.keys(def).length > 0
+    ) {
+      result = def;
+    }
+
     return result;
   }
 
@@ -94,20 +103,17 @@ class Terra {
    * Load setting, initialize inner class, grab player contents and registering SpecialItem
    */
   static setup(): void {
+    this.guild = new Guild();
+    this.leaderboard = new Leaderboard();
+
     system.run(() => {
       this.world.guilds = this.getProperty("guild", []) as GuildData[];
       this.world.leaderboards = this.getProperty("leaderboard", CreateObject.createLeaderboard()) as LeaderboardData;
-      this.world.setting = this.getProperty("setting", Parser.clone(settings));
+      this.world.setting = this.getProperty("setting", CreateObject.createSettings());
       this.world.redeem = this.getProperty("redeem", []) as RedeemData[];
       this.entities = this.getProperty("entities", []) as EntityData[];
       this.pityPlayer = this.getProperty("pity", []) as PityPlayer[];
       this.specialist = this.getProperty("specialist", []) as SpecialistData[];
-
-      this.guild = new Guild();
-      this.leaderboard = new Leaderboard();
-
-      this.setPlayer(world.getAllPlayers());
-      this.createSpecialistCache();
 
       // Item Event Load Counter
       console.warn(
@@ -132,7 +138,7 @@ class Terra {
    * Reset world settings to default
    */
   static resetWorldSettingsData(): void {
-    this.world.setting = Parser.clone(settings);
+    this.world.setting = CreateObject.createSettings();
     this.world.redeem = [] as RedeemData[];
   }
 
@@ -333,13 +339,15 @@ class Terra {
    * @param finder - { name?: string | id?: string }
    * @returns
    */
-  static getPlayer(finder: PlayerFinder | undefined): Player[] | Player | undefined {
+  static getPlayer(finder?: PlayerFinder | undefined): Player[] | Player | undefined {
     if (!finder) {
       return this.players;
     }
 
     const key = Object.keys(finder)[0] as keyof PlayerFinder;
-    return this.players.find((e) => e[key] === finder[key]);
+    return (
+      this.players.find((e) => e[key] === finder[key]) ?? world.getAllPlayers().find((e) => e[key] === finder[key])
+    );
   }
 
   /**
@@ -377,6 +385,7 @@ class Terra {
    */
   static setPlayer(players: Player[]): void {
     this.players = players;
+    // console.warn(players.map((e) => e.name));
   }
 
   // Specialist data cache
@@ -410,11 +419,12 @@ class Terra {
    * @returns Specialist
    */
   static getSpecialistCache(player: Player): Specialist {
-    const sp = this.specialistCache.find((e) => e.id === player.id);
+    let sp = this.specialistCache.find((e) => e.id === player.id);
 
     if (!sp) {
-      this.createSpecialistCache();
-      return new Specialist(player);
+      sp = new Specialist(player);
+      this.specialistCache.push(sp);
+      return sp;
     }
 
     return sp;

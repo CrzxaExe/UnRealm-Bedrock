@@ -9,7 +9,10 @@ import {
 import { SettingStarterItem, Terra } from "../ZxraLib/module";
 
 // Join event
-world.afterEvents.playerJoin.subscribe((event: PlayerJoinAfterEvent) => {});
+world.afterEvents.playerJoin.subscribe((event: PlayerJoinAfterEvent) => {
+  Terra.setPlayer(world.getAllPlayers());
+  Terra.createSpecialistCache();
+});
 
 // Player Spawn event
 world.afterEvents.playerSpawn.subscribe(({ initialSpawn, player }: PlayerSpawnAfterEvent) => {

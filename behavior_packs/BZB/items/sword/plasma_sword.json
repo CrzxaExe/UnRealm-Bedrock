@@ -76,7 +76,9 @@
           }
         ]
       },
-      "tag:minecraft:is_sword": {},
+      "minecraft:tags": {
+        "tags": ["minecraft:is_sword", "cz:plasma_tier"]
+      },
       "minecraft:custom_components": ["cz:durability"]
     }
   }

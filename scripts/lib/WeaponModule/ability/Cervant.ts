@@ -2,7 +2,7 @@ import { Entity, Specialist, SpecialistWeapon, SpecialistWeaponPlayer } from "..
 import { weaponData, weaponRaw } from "../module";
 
 class Cervant {
-  static pasif1(
+  static pasif(
     target: Entity,
     sp: Specialist,
     wpnData: SpecialistWeaponPlayer = sp.getSp().weapons.find((e) => e.weapon === "cervant") ?? weaponRaw.legend.cervant

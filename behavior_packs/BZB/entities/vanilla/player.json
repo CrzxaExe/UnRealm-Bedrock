@@ -1,5 +1,5 @@
 {
-  "format_version": "1.18.20",
+  "format_version": "1.21.0",
   "minecraft:entity": {
     "description": {
       "identifier": "minecraft:player",
@@ -316,7 +316,30 @@
           }
         }
       },
-      "float": {},
+      "float": {
+        "minecraft:physics": {
+          "has_collision": true,
+          "has_gravity": false
+        }
+      },
+      "no_float": {
+        "minecraft:physics": {
+          "has_collision": true,
+          "has_gravity": true
+        }
+      },
+      "ghost": {
+        "minecraft:physics": {
+          "has_collision": false,
+          "has_gravity": false
+        }
+      },
+      "no_ghost": {
+        "minecraft:physics": {
+          "has_collision": true,
+          "has_gravity": true
+        }
+      },
       "health1": {
         "minecraft:health": {
           "max": 22
@@ -411,7 +434,7 @@
         "damage": 1
       },
       "minecraft:exhaustion_values": {
-        "heal": 6,
+        "heal": 6.0,
         "jump": 0.05,
         "sprint_jump": 0.2,
         "mine": 0.005,
@@ -419,7 +442,8 @@
         "damage": 0.1,
         "walk": 0.0,
         "sprint": 0.1,
-        "swim": 0.01
+        "swim": 0.01,
+        "lunge": 4.0
       },
       "minecraft:player.saturation": {
         "value": 5,
@@ -571,6 +595,38 @@
         },
         "remove": {
           "component_groups": ["no_variant"]
+        }
+      },
+      "cz:float": {
+        "add": {
+          "component_groups": ["float"]
+        },
+        "remove": {
+          "component_groups": ["no_float"]
+        }
+      },
+      "cz:ghost": {
+        "add": {
+          "component_groups": ["ghost"]
+        },
+        "remove": {
+          "component_groups": ["no_ghost"]
+        }
+      },
+      "cz:no_float": {
+        "add": {
+          "component_groups": ["no_float"]
+        },
+        "remove": {
+          "component_groups": ["float"]
+        }
+      },
+      "cz:no_ghost": {
+        "add": {
+          "component_groups": ["no_ghost"]
+        },
+        "remove": {
+          "component_groups": ["ghost"]
         }
       },
       "cz:endless_1": {

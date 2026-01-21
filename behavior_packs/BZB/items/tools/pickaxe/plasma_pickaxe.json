@@ -456,7 +456,9 @@
           }
         ]
       },
-      "tag:plasma": {},
+      "minecraft:tags": {
+        "tags": ["minecraft:digger", "minecraft:is_tool", "minecraft:is_pickaxe", "cz:plasma_tier"]
+      },
       "minecraft:custom_compoments": ["cz:durability"]
     }
   }

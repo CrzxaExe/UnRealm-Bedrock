@@ -2,6 +2,8 @@
 
 # Weapon
 
+`Note: Skill or Pasif with indicated by '*' are has been prototyped`
+
 ## Aegis Concept
 
 > Atk 6<br/>
@@ -88,13 +90,13 @@ Trait `[Artsword]`
 
 Pasif:
 
-> [Electricity] When Atk and Skill combined, summon lighting to deals 150% Atk
+> [Electricity*] When Atk and Skill combined, summon lighting to deals 150% Atk
 >
-> [ArChain] Attack will chain to 2 other enemy and damage will decrease 30% every jump from enemy.
+> [ArChain*] Attack will chain to 2 other enemy and damage will decrease 30% every jump from enemy.
 
 Skills:
 
-> [Conductor Strike], 14 Stamina | 5s CD | No sneak<br/>
+> [Conductor Strike*], 14 Stamina | 5s CD | No sneak<br/>
 > Strike through target and deals 180% Atk as Lightning damage. Doesn't chainning
 >
 > [Foreground Shockwave], 18 Stamina | 8.5s CD | Sneak<br/>
@@ -103,7 +105,7 @@ Skills:
 > [Self Conduction], 20 Stamina | 15s CD | Has %Electricity status<br/>
 > Summon Lightning strike to self, clear all debuff and gain protection effect for a sec. On duration, enemy that attacking user will get 50% Atk as Lightning damage
 >
-> [Thunder Strom], 26 Stamina | 25s CD | Jump<br/>
+> [Thunder Strom*], 26 Stamina | 25s CD | Jump<br/>
 > Lock one target to summon 3 lightning strike to deals 220% Atk as Lightning damage and chaining to 3 target nearby.
 
 ## Bringer Concept
@@ -121,7 +123,7 @@ Trait `[Reaper]`
 
 Pasif:
 
-> [Kill Benefit]: Everytime killing enemy, user will get healed by 20% Max HP
+> [Kill Benefit*]: Everytime killing enemy, user will get healed by 20% Max HP
 
 Skills:
 
@@ -189,7 +191,7 @@ Trait `[Reaper]`
 
 Pasif:
 
-> [Our Fire] Attacking burn enemy will extend burn status and heal from trait are 3x
+> [Our Fire*] Attacking burn enemy will extend burn status and heal from trait are 3x
 
 Skills:
 
@@ -216,7 +218,7 @@ Trait `[Century]`
 
 Pasif:
 
-> [Sharp Slice] When attacking enemy, increase damage +10% Atk. Can be stacked up to 5 times
+> [Sharp Slice*] When attacking enemy, increase damage +10% Atk. Can be stacked up to 5 times
 
 Skills:
 
@@ -267,9 +269,9 @@ Trait `[Spear]`
 
 Pasif:
 
-> [Fears] Hitting enemy will %Silence them
+> [Fears*] Hitting enemy will %Silence them
 >
-> [Unshantle Shift] Increase damage to %Silence enemy by 150%
+> [Unshantle Shift*] Increase damage to %Silence enemy by 150%
 
 Skills:
 
@@ -420,31 +422,31 @@ Trait `[Slayer]`
 
 Pasif:
 
-> [Blooding]: Change losing HP to %Zelxt-Point. While having 100 %Zelxt-Point next skill will transform to Zelxt Mode than will increase output skill dmg by 2.4x. While on Zelxt Mode, %Zelxt-Point will be consume when killing enemy and heal user depending on lost HP. (Max %Zelxt-Point is 200)
+> [Blooding*]: Change losing HP to %Zelxt-Point. While having 100 %Zelxt-Point next skill will transform to Zelxt Mode than will increase output skill dmg by 2.4x. While on Zelxt Mode, %Zelxt-Point will be consume when killing enemy and heal user depending on lost HP. (Max %Zelxt-Point is 200)
 >
-> [Zelxtinity]: While on Zelxt Mode and get lethal dmg, will heal to max HP and losing Zelxt Mode.
+> [Zelxtinity*]: While on Zelxt Mode and get lethal dmg, will heal to max HP and losing Zelxt Mode.
 
 Skils:
 
-> [Tempest Slices], 8 Stamina | 5s CD | No Sneak<br/>
+> [Tempest Slices*], 8 Stamina | 5s CD | No Sneak<br/>
 > Consume 40% current HP, slash one target and deal 400% Atk + 40% Max HP as Physical Damage
 >
-> [Tempest Zelxt Slash], 12 Stamina | 3.5s CD | No Sneak & on Zelxt Mode<br/>
+> [Tempest Zelxt Slash*], 12 Stamina | 3.5s CD | No Sneak & on Zelxt Mode<br/>
 > Consume 50% current HP, attack twice and deals Void Damage to all target on track as 400% Atk + 40% Max HP
 >
-> [Slice Through], 14 Stamina | 9.5s CD | Sneak<br/>
+> [Slice Through*], 14 Stamina | 9.5s CD | Sneak<br/>
 > Dash to front and deals AOE dmg to area around user as 250% Atk + 60% Max HP as Physical Damage, Consume 50% current HP
 >
-> [Ender on Zel], 20 Stamina | 7s CD | Sneak & on Zelxt Mode<br/>
+> [Ender on Zelxt*], 20 Stamina | 7s CD | Sneak & on Zelxt Mode<br/>
 > Teleport to target location and deal Void damage to all target on radius as 300% Atk + 80% Max HP, Consume 60% current HP
 >
-> [Unlifted Slice], 10 Stamina | 11s CD | Jump<br/>
+> [Unlifted Slice*], 10 Stamina | 11s CD | Jump<br/>
 > Hit the target and causes target to airbone, deals 60% Max HP as Physical Damage, consume 50% Current HP
 >
-> [Corruption on Pain], 17 Stamina | 20s CD | Jump & on Zelxt Mode<br/>
+> [Corruption on Pain*], 17 Stamina | 20s CD | Jump & on Zelxt Mode<br/>
 > Hitting ground, causes target on area gets AOE Void damage as 95% Max HP. Recover 20% HP when there are 3 target on area
 >
-> [Zelxt Devoured], 10 Stamina | 0 CD | %Zelxt-Point >= 100<br/>
+> [Zelxt Devoured*], 10 Stamina | 0 CD | %Zelxt-Point >= 100<br/>
 > Enter to Zelxt Mode, gains Absorption & Speed effect for a sec.
 
 ## Lectaze Concept
@@ -512,13 +514,13 @@ Trait `[Reaper]`
 
 Pasif:
 
-> [Soul of Death]: When killing enemy will get %Soul-of-Death stack up to 3 stack. Every stack will increase heal from trait and skill damage. Summon %Angel
+> [Soul of Death*]: When killing enemy will get %Soul-of-Death stack up to 3 stack. Every stack will increase heal from trait and skill damage. Summon %Angel
 >
-> [Angel Queen]: Every hit will mark target for %Angel priority target. When %Angel on user skill range, user & %Angel get heal by 20% Max HP excluding skill 3
+> [Angel Queen*]: Every hit will mark target for %Angel priority target. When %Angel on user skill range, user & %Angel get heal by 20% Max HP excluding skill 3
 
 Skils:
 
-> [Reap Through], 16 Stamina | 4.5s CD | No Sneak<br/>
+> [Reap Through*], 16 Stamina | 4.5s CD | No Sneak<br/>
 > Swipe all enemy on front of user with cone shape, deals 140% Atk as AOE damage to all enemy
 >
 > [Reaping Flow], 26 Stamina | 6s CD | No Sneak & %Liberator-Angel on field<br/>
@@ -571,7 +573,7 @@ Trait `[Spear]`
 
 Pasif:
 
-> [Burning Glare] Increase damage deals to burning enemy by 2.5 times and change damage into Fire damage
+> [Burning Glare*] Increase damage deals to burning enemy by 2.5 times and change damage into Fire damage
 
 Skills:
 
@@ -601,12 +603,12 @@ Pasif:
 
 Skills:
 
-> [Crag Splitter], 16 Stamina | 3.5s CD | No Sneak<br/>
+> [Crag Splitter*], 16 Stamina | 3.5s CD | No Sneak<br/>
 > Spin and cause damage to all target around user, deals 210% Atk and heals 10% Max HP
 >
 > []
 >
-> [Bloodline of Desecrated Earth], 24 Stamina | 21s CD | 30s | Jump<br/>
+> [Bloodline of Desecrated Earth*], 24 Stamina | 21s CD | 30s | Jump<br/>
 > Charging for 10 sec. While charging, user will immune to any damage. After all deals 300% Atk to all enemy in range and gains +60% Skill Damge for 20 sec
 >
 > []
@@ -672,7 +674,7 @@ Trait `[Century]`
 
 Pasif:
 
-> [Gaslt], Every time using skill, will get shield that will block 1 physical damage. (Cannot be stacked)
+> [Gaslt], Every time using skill, will get shield that will block 1 physical damage. Cooldown each shield are 9 sec. (Cannot be stacked)
 >
 > [Offensive Protection], While has shield, damage will increase to 130% Atk
 
@@ -852,7 +854,7 @@ Pasif:
 
 Skill:
 
-> [Incarmc], 18 Stamina | 6.5s CD | No Sneak<br/>
+> [Incarm*], 18 Stamina | 6.5s CD | No Sneak<br/>
 > Shoot art bullet to deals 300% Atk as Art damage
 >
 > [Stanc Quiest], 24 Stamina | 10s CD | Sneak<br/>

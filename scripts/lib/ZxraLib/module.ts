@@ -30,6 +30,7 @@ export const ZxraLib: {
     },
   ],
 };
+export { settings } from "./data/setting";
 
 // Class export
 export { Calc, SpecialistLevelUp } from "./class/Calc";
@@ -53,21 +54,21 @@ export { Status } from "./class/Status";
 export { Terra } from "./class/Terra";
 
 // Data export
+export * as modifierDataList from "./data/modifier";
 export { damageColor, rarityColor } from "./data/color";
-export { commandEnums } from "./data/commandEnum";
-export { RUNE_GACHA_PRICE, WEAPON_GACHA_PRICE } from "./data/constant";
+export { RUNE_GACHA_PRICE, SURVIVE_MODE, WEAPON_GACHA_PRICE } from "./data/constant";
 export { NOT_ALLOWED_ENTITY_TICK, NOT_VALID_ENTITY } from "./data/entityFilters";
 export { gachaFeatured, gachaPolls, GachaRarity } from "./data/gacha";
 export { npcFile } from "./data/npc";
 export { questIndex } from "./data/quest";
 export { defaultEntity, defaultPity, defaultRuneStat, defaultSpecialist } from "./data/raw";
 export { runeList } from "./data/rune";
-export { settings } from "./data/setting";
 export { guildShop } from "./data/shop";
 
 // Enums export
 export { Currency, CurrencyEnums } from "./enum/currency";
 export { BzbEntity } from "./enum/entity";
+export { ModifierActiveActions, ModifierActiveActionsEnum, ModifierTypeEnums, ModifierTypes } from "./enum/modifier";
 export { StatusDecay, StatusDecayEnum, StatusTypes, StatusTypesEnum } from "./enum/status";
 export { WeaponTypes } from "./enum/weaponTypes";
 
@@ -75,11 +76,10 @@ export { WeaponTypes } from "./enum/weaponTypes";
 export { durabilityControl } from "./function/durabilityControl";
 
 // NPC Models export
+export { Iyura } from "./npc/models/Iyura";
 export { Yuri } from "./npc/models/Yuri";
 
 // Types export
-export type { CommandEnumTypeStrict } from "./types/command";
-export type { GuildRole, GuildRoles, GuildData, GuildLevel, GuildMember, GuildShopItem } from "./types/guild";
 export type {
   AntiHealData,
   BossChallengeData,
@@ -95,7 +95,10 @@ export type {
   LeaderboardData,
   LeaderboardSystemType,
   LeaderboardType,
+  Modifiers,
   ModifierData,
+  ModifierList,
+  ModifierStats,
   QuestConst,
   QuestController,
   QuestData,
@@ -133,6 +136,7 @@ export type {
   WeaponComponent,
   WeaponComponentData,
   WeaponComponentDataValue,
+  WeaponStatLore,
   WeaponSkill,
   WeaponStat,
   WorldData,
@@ -166,4 +170,10 @@ import "./registry/blocks/all";
 import "./registry/items/tools";
 import "./registry/itemEvent/consume";
 import "./registry/itemEvent/use";
+import "./registry/modifiers/axe";
+import "./registry/modifiers/hoe";
+import "./registry/modifiers/pickaxe";
+import "./registry/modifiers/sword";
 import { PluginsData } from "./types/lib";
+
+export { commandEnums } from "./data/commandEnum";

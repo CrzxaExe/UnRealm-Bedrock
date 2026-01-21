@@ -12,7 +12,7 @@ class Mudrock {
     sp.playAnim("animation.weapon.mudrock.swing");
 
     system.runTimeout(() => {
-      sp.bind(1.2);
+      sp.bind(1);
       sp.getEntityWithinRadius(4).forEach((e: mcEntity) => {
         Terra.getEntityCache(e).addDamage(
           data.atk * (skill.find((r) => r.name === "atk_percentage")?.value ?? 2.1) * (multiplier || 1),
@@ -27,7 +27,7 @@ class Mudrock {
     }, 18);
   }
 
-  static skill3(user: Player, { sp }: SkillLib): void {
+  static skill3(user: Player, { sp, multiplier }: SkillLib): void {
     const data = sp.getSp().weapons.find((e) => e.weapon === "mudrock") || weaponRaw.unique.mudrock,
       skill = weaponData.unique.mudrock.skillLvl[2]![data.skillLvl[2]!];
 
@@ -36,8 +36,17 @@ class Mudrock {
     sp.minStamina(skill?.find((e) => e.name === "stamina")!.value || 24);
     sp.playAnim("animation.weapon.mudrock.special");
 
+    sp.bind(5);
+
     system.runTimeout(() => {
       sp.cooldown.addCd("mudrock_skill3", skill.find((e) => e.name === "cooldown")!.value || 20);
+
+      sp.getEntityWithinRadius(6).forEach((e: mcEntity) => {
+        Terra.getEntityCache(e).addDamage(
+          data.atk * (skill.find((r) => r.name === "atk_percentage")?.value ?? 3) * (multiplier ?? 1),
+          { cause: "entityAttack", damagingEntity: user, isSkill: true, rune: sp.rune.getRuneStat() }
+        );
+      });
     }, 100);
   }
 }

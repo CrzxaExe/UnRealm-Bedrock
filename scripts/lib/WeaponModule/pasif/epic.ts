@@ -9,7 +9,7 @@ Weapon.addHitPasif("bringer", (user: Player, _: unknown, { sp }: { sp: Specialis
   });
 });
 Weapon.addKillPasif("bringer", (user: Player, _: unknown, { sp }: { sp: Specialist }) => {
-  Bringer.pasif1(user, sp);
+  Bringer.pasif(user, sp);
 });
 
 // Cenryter

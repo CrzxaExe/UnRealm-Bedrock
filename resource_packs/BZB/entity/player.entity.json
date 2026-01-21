@@ -6,7 +6,8 @@
       "materials": {
         "default": "entity_alphatest",
         "cape": "entity_alphatest",
-        "animated": "player_animated"
+        "animated": "player_animated",
+        "spectator": "player_spectator"
       },
       "textures": {
         "default": "textures/entity/steve",
@@ -35,7 +36,7 @@
           "variable.hand_bob = 0.0;"
         ],
         "pre_animation": [
-          "variable.helmet_layer_visible = 1.0;",
+          "variable.helmet_layer_visible = !query.has_head_gear;",
           "variable.leg_layer_visible = 1.0;",
           "variable.boot_layer_visible = 1.0;",
           "variable.chest_layer_visible = 1.0;",
@@ -47,6 +48,7 @@
           "variable.hand_bob = query.life_time < 0.01 ? 0.0 : variable.hand_bob + ((query.is_on_ground && query.is_alive ? math.clamp(math.sqrt(math.pow(query.position_delta(0), 2.0) + math.pow(query.position_delta(2), 2.0)), 0.0, 0.1) : 0.0) - variable.hand_bob) * 0.02;",
           "variable.map_angle = math.clamp(1 - variable.player_x_rotation / 45.1, 0.0, 1.0);",
           "variable.item_use_normalized = query.main_hand_item_use_duration / query.main_hand_item_max_duration;",
+          "variable.riding_y_offset = query.is_riding_any_entity_of_type('minecraft:minecart', 'minecraft:boat', 'minecraft:chest_boat', 'minecraft:strider') ? -3.0 : 0.0;",
           "variable.sneak = q.is_sneaking > 0;",
           "variable.run = q.is_sprinting;",
           "variable.idle = !q.is_sprinting;",
@@ -61,7 +63,7 @@
           "variable.dagger = q.get_equipped_item_name=='azyh';",
           "variable.lance = q.get_equipped_item_name=='vitage';",
           "variable.flute = q.get_equipped_item_name=='harmist_flute';",
-          "variable.isCrzx = q.get_name=='CrzxaExe3' > 0;"
+          "variable.isCrzx = q.get_name=='CrzxaExe3';"
         ],
         "animate": [
           "root",
@@ -70,7 +72,16 @@
             "kyle_new_idle": "q.get_name=='CrzxaExe3'"
           },
           "shield_animation"
-        ]
+        ],
+        "variables": {
+          "variable.fp_melee_spear_use_attachable_rotation_z": "public",
+          "variable.tp_melee_spear_use_attachable_rotation_z": "public",
+          "variable.fp_melee_spear_attack_attachable_rotation_z": "public",
+          "variable.tp_melee_spear_attack_attachable_position_z": "public",
+          "variable.attack_time": "public",
+          "variable.item_use_normalized": "public"
+        },
+        "should_update_effects_offscreen": "1.0"
       },
       "animations": {
         "root": "controller.animation.cz.player.root",
@@ -128,6 +139,26 @@
         "shield_block_main_hand": "animation.cz.block.main",
         "shield_block_off_hand": "animation.cz.block.off",
         "blink": "controller.animation.persona.blink",
+        "fishing_rod": "animation.humanoid.fishing_rod",
+        "holding_spyglass": "animation.humanoid.holding_spyglass",
+        "first_person_shield_block": "animation.player.first_person.shield_block",
+        "tooting_goat_horn": "animation.humanoid.tooting_goat_horn",
+        "holding_brush": "animation.humanoid.holding_brush",
+        "brushing": "animation.humanoid.brushing",
+        "crawling": "animation.player.crawl",
+        "crawling.legs": "animation.player.crawl.legs",
+        "swimming.no_right_arm": "animation.player.swim.no_right_arm",
+        "crawling.no_right_arm": "animation.player.crawl.no_right_arm",
+        "riding.root": "animation.player.riding.root",
+        "holding_heavy_core": "animation.player.holding_heavy_core",
+        "first_person_melee_spear_use": "animation.player.first_person.melee_spear_use",
+        "first_person_melee_spear_hold": "animation.player.first_person.melee_spear_hold",
+        "first_person_melee_spear_attack": "animation.player.first_person.melee_spear_attack",
+        "first_person_melee_spear_controller": "controller.animation.player.first_person_melee_spear",
+        "third_person_melee_spear_use": "animation.humanoid.melee_spear_use",
+        "third_person_melee_spear_hold": "animation.humanoid.melee_spear_hold",
+        "third_person_melee_spear_attack": "animation.player.melee_spear_attack",
+        "third_person_melee_spear_controller": "controller.animation.player.melee_spear",
         "draw_control": "controller.animation.draw.control",
         "kyle_draw": "animation.kyle.draw",
         "kyle_charge": "animation.weapon.kyles.charge",
@@ -152,6 +183,12 @@
         "heavy_charge": "animation.weapon.heavy.charge"
       },
       "render_controllers": [
+        {
+          "controller.render.player.first_person_spectator": "variable.is_first_person && query.is_spectator"
+        },
+        {
+          "controller.render.player.third_person_spectator": "!variable.is_first_person && !variable.map_face_icon && query.is_spectator"
+        },
         {
           "controller.render.player.first_person": "variable.is_first_person"
         },

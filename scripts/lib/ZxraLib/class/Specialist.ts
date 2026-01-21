@@ -1,4 +1,4 @@
-import { Container, GameMode, Player, Vector3, Entity as mcEntity } from "@minecraft/server";
+import { Camera, Container, EasingType, GameMode, Player, Vector3, Entity as mcEntity } from "@minecraft/server";
 import {
   Entity,
   Terra,
@@ -26,7 +26,7 @@ class Specialist extends Entity {
   constructor(player: Player) {
     if (!player) throw new Error("Missing player");
 
-    super(player);
+    super(player as Player);
     this.container = this.source.getComponent("inventory");
     this.cooldown = new Cooldown(this);
     this.rune = new Rune(this);
@@ -113,7 +113,7 @@ class Specialist extends Entity {
  
 §eS ${((stamina.current / Math.floor(stamina.max + stamina.additional + stamina.rune)) * 100).toFixed(
         0
-      )}%§r§f §1T ${Number((thirst.current / thirst.max) * 100).toFixed(0)}§r§f
+      )}%§r§f §1T ${Number((thirst.current / thirst.max) * 100).toFixed(0)}%§r§f
 ${
   this.source.getBlockFromViewDirection({ maxDistance: Terra.world.setting?.whatSeeDistance || 7 })?.block?.type.id ||
   this.getEntityFromDistance(Terra.world.setting?.whatSeeDistance || 7)[0]?.entity.typeId ||
@@ -364,6 +364,21 @@ ${
 
     data.components.splice(find, 1);
     this.setSp(data);
+  }
+
+  // Camera methods
+  public clearCamera(): void {
+    (this.source.camera as Camera).clear();
+  }
+  public setCameraToEntity(location: Vector3, facingEntity: mcEntity): void {
+    (this.source.camera as Camera).setCamera("minecraft:free", {
+      location,
+      facingEntity: facingEntity,
+      easeOptions: {
+        easeTime: 0.5,
+        easeType: EasingType.InOutExpo,
+      },
+    });
   }
 }
 
