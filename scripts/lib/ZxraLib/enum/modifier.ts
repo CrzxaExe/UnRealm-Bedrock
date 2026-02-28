@@ -2,6 +2,7 @@ export const ModifierTypeEnums = {
   All: "all",
   Axe: "axe",
   Hoe: "hoe",
+  Mace: "mace",
   Pickaxe: "pickaxe",
   Sword: "sword",
 } as const;

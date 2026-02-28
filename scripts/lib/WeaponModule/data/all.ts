@@ -121,7 +121,14 @@ export const unique: { [key: string]: SpecialistWeapon } = {
           { name: "atk_percentage", value: 1.8 },
         ],
       ],
-      [],
+      [
+        [
+          { name: "stamina", value: 18 },
+          { name: "cooldown", value: 8.5 },
+          { name: "atk_percentage", value: 2 },
+          { name: "radius", value: 5 },
+        ],
+      ],
       [
         [
           { name: "stamina", value: 26 },
@@ -130,7 +137,14 @@ export const unique: { [key: string]: SpecialistWeapon } = {
           { name: "radius", value: 5 },
         ],
       ],
-      [],
+      [
+        [
+          { name: "stamina", value: 20 },
+          { name: "cooldown", value: 15 },
+          { name: "buff_duration", value: 10 },
+          { name: "buff_amplifier", value: 2 },
+        ],
+      ],
     ],
   },
   skyler: {
@@ -355,6 +369,41 @@ export const epic: { [key: string]: SpecialistWeapon } = {
       [],
     ],
   },
+  undying: {
+    weapon: "undying",
+    atk: 8,
+    pasifLvl: [
+      [
+        [
+          { name: "buff_duration", value: 10 },
+          { name: "buff_amplifier", value: 30 },
+        ],
+      ],
+    ],
+    skillLvl: [
+      [
+        [
+          { name: "stamina", value: 12 },
+          { name: "cooldown", value: 8 },
+          { name: "atk_percentage", value: 2 },
+        ],
+      ],
+      [
+        [
+          { name: "stamina", value: 20 },
+          { name: "cooldown", value: 14 },
+          { name: "atk_percentage", value: 1.7 },
+        ],
+      ],
+      [
+        [
+          { name: "stamina", value: 25 },
+          { name: "cooldown", value: 24 },
+          { name: "atk_percentage", value: 3.5 },
+        ],
+      ],
+    ],
+  },
 };
 
 export const legend: { [key: string]: SpecialistWeapon } = {
@@ -382,7 +431,7 @@ export const legend: { [key: string]: SpecialistWeapon } = {
           { name: "cooldown", value: 3.5 },
           { name: "normal_atk_percentage", value: 2.0 },
           { name: "shockwave_atk_percentage", value: 1.0 },
-          { name: "sharped_atk_percentage", value: 1.9 },
+          { name: "sharped_atk_percentage", value: 1.8 },
         ],
       ],
       [
@@ -398,7 +447,22 @@ export const legend: { [key: string]: SpecialistWeapon } = {
     weapon: "lighter",
     atk: 10,
     pasifLvl: [[[{ name: "atk_percentage", value: 2.5 }]]],
-    skillLvl: [[], []],
+    skillLvl: [
+      [
+        [
+          { name: "stamina", value: 14 },
+          { name: "cooldown", value: 5.5 },
+          { name: "atk_percentage", value: 1.8 },
+        ],
+      ],
+      [
+        [
+          { name: "stamina", value: 26 },
+          { name: "cooldown", value: 15 },
+          { name: "atk_percentage", value: 2.8 },
+        ],
+      ],
+    ],
   },
 };
 

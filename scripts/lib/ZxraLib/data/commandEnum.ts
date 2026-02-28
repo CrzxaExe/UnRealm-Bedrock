@@ -21,13 +21,5 @@ export const commandEnums: CommandEnumTypeStrict = {
     "wet",
   ],
   "cz:statusdecay": ["none", "stack", "time"],
-  "cz:modifiers": [
-    // ...[
-    //   ...Object.keys(modifierDataList)
-    //     .map((e: string) => [...Object.keys(modifierDataList[e as keyof typeof modifierDataList])])
-    //     .flat(),
-    // ],
-
-    ...Modifier.mod.map((e) => e.name),
-  ],
+  "cz:modifiers": [...Modifier.mod.map((e) => e.name)],
 };

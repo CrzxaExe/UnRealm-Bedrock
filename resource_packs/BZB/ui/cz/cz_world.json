@@ -204,7 +204,7 @@
     "$scroll_tab_content": "cz_world.cz_server_scroll_content"
   },
 
-  "top_tab@cz_common.cz_dark_button": {
+  "top_tab@cz_commons.dark_button": {
     "$toggle_tts_enabled_binding_type": "global",
     "$radio_toggle_group": true,
     "$toggle_name": "navigation_tab",

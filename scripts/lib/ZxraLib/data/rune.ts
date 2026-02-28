@@ -44,7 +44,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
     {
       // 5
       onHit(player: Player): void {
-        new Entity(player).heal(1);
+        Terra.getEntityCache(player).heal(1);
       },
     },
   ],
@@ -98,7 +98,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
     },
   ],
 
-  altetic_ring: [
+  atletic_ring: [
     {
       // 12
       staminaReduction: 0.2,
@@ -126,7 +126,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
     {
       // 15
       onHited(player: Player, target: any): void {
-        new Entity(target).status.addStatus("silence_shield_shard", 3, {
+        Terra.getEntityCache(target).status.addStatus("silence_shield_shard", 3, {
           type: "silence",
           decay: "time",
           lvl: 1,
@@ -157,7 +157,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
             ?.getTags()
             ?.includes("dagger")
         ) {
-          new Entity(target).addEffectOne("poison", 5, 2);
+          Terra.getEntityCache(target).addEffectOne("poison", 5, 2);
         }
       },
     },
@@ -168,7 +168,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
       // 18
       atk: 0.14,
       onKill(player: Player): void {
-        new Entity(player).addEffectOne("speed", 1, 0);
+        Terra.getEntityCache(player).addEffectOne("speed", 1, 0);
       },
     },
   ],
@@ -177,7 +177,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
     {
       // 19
       onHit(player: Player, target: any): void {
-        new Entity(target).addEffectOne("weakness", 2, 0);
+        Terra.getEntityCache(target).addEffectOne("weakness", 2, 0);
       },
     },
   ],
@@ -187,7 +187,7 @@ export const runeList: { [key: string]: RuneStats[] } = {
       // 20
       fireFragile: 0.16,
       onHited(player: Player): void {
-        new Entity(player).addEffectOne("fire_resistance", 0.5, 0);
+        Terra.getEntityCache(player).addEffectOne("fire_resistance", 0.5, 0);
       },
     },
   ],
@@ -211,13 +211,13 @@ export const runeList: { [key: string]: RuneStats[] } = {
       atk: 0.1,
       skill: 0.06,
       onHit(player: Player, target: any): void {
-        new Entity(target).status.addStatus("xiyanite_silence", 2, {
+        Terra.getEntityCache(target).status.addStatus("xiyanite_silence", 2, {
           type: "silence",
           decay: "time",
           lvl: 1,
           stack: false,
         });
-        new Entity(player).heal(1);
+        Terra.getEntityCache(player).heal(1);
       },
     },
   ],

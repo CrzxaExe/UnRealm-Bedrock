@@ -488,6 +488,21 @@
 					}
 				}
 			}
+		},
+		"animation.weapon.boltizer.charge": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"leftArm": {
+					"rotation": [-17.5, 0, 0]
+				},
+				"rightArm": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": ["-105.4969316448 +this", "-60.2626027045 +this", "2.0030683549 -this"],
+					"position": [-2, -3, -3]
+				}
+			}
 		}
 	}
 }

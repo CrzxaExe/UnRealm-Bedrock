@@ -95,16 +95,21 @@ class Specialist extends Entity {
   controllerUI(): void {
     const { cd: cols, level, rep, stamina, thirst, money, voxn } = this.getSp();
 
-    const cd: string[] = cols.map((e) => `${Formater.formatName(e.name)} ${e.duration.toFixed(2)}s`);
-    const sts: string[] = this.status.getStatus().map((e) => {
-      const lbl: string =
-        {
-          stack: `${Formater.formatName(e.name)} > ${e.lvl.toFixed(0)}`,
-          state: `${Formater.formatName(e.name)}`,
-        }[e.type as string] || `${Formater.formatName(e.name)} ${e.duration.toFixed(2)}s`;
+    const cd: string[] = cols
+      .sort((a, b) => a.duration - b.duration)
+      .map((e) => `${Formater.formatName(e.name)} ${e.duration.toFixed(2)}s`);
+    const sts: string[] = this.status
+      .getStatus()
+      .sort((a, b) => a.duration - b.duration)
+      .map((e) => {
+        const lbl: string =
+          {
+            stack: `${Formater.formatName(e.name)} > ${e.lvl.toFixed(0)}`,
+            state: `${Formater.formatName(e.name)}`,
+          }[e.type as string] || `${Formater.formatName(e.name)} ${e.duration.toFixed(2)}s`;
 
-      return lbl;
-    });
+        return lbl;
+      });
 
     this.source.onScreenDisplay.setTitle(
       `cz:ui (${((level.xp / Calc.specialistLevelUp(level.current || 0)) * 100).toFixed(1)}) ${level.xp.toFixed(2)} XP ${
@@ -242,7 +247,7 @@ ${
     this.setThirst(data.thirst.max, data);
   }
   setMaxThrist(key: "max" | "temp", amount: number = 0, data: SpecialistData = this.getSp()): void {
-    data.thirst[key] += amount;
+    data.thirst[key] = amount;
     this.setSp(data);
   }
 

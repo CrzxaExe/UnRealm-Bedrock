@@ -193,12 +193,13 @@ class Entity {
       isSkill: false,
     },
     velocity: { vel: Vector3; ver: number; hor: number } = {
-      vel: this.source.getVelocity() ?? { x: 0, y: 0, z: 0 },
+      vel: this.source?.getVelocity() ?? { x: 0, y: 0, z: 0 },
       ver: 0,
       hor: 0,
     }
   ): void {
     try {
+      if (!this.source) return;
       if (damage < 0) damage = 1;
       let multiplier = 1 + (options.rune?.atk || 0) + (options.isSkill ? options.rune?.skill || 0 : 0);
 
@@ -245,7 +246,9 @@ class Entity {
       });
 
       if (!velocity) return;
-      this.knockback(velocity.vel, velocity.ver, velocity.hor);
+      system.runTimeout(() => {
+        this.knockback(velocity.vel, velocity.ver, velocity.hor);
+      }, 2);
     } catch (error: Error | unknown) {}
   }
 

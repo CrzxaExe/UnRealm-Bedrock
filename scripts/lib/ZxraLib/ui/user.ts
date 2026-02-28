@@ -30,13 +30,13 @@ class UserPanel {
     const ui = new ActionFormData()
       .title("cz:user")
       .body({ rawtext: [{ translate: "system.profileMenu.body" }, { text: "\n\n\n\n\n\n\n\n\n\n\n\n\n" }] })
+      .button({ translate: "cz.user" }, "textures/cz/icon/user")
       .button({ translate: "cz.shop" }, "textures/cz/icon/shop")
       .button({ translate: "cz.guild" }, "textures/cz/icon/guild")
       .button({ translate: "cz.rune" }, "textures/cz/icon/rune")
       .button({ translate: "cz.leaderboard" }, "textures/cz/icon/leaderboard")
       .button({ translate: "cz.gacha" }, "textures/cz/icon/gacha")
       .button({ translate: "cz.quest" }, "textures/cz/icon/quest")
-      .button({ translate: "cz.user" }, "textures/cz/icon/user")
       .button({ translate: "cz.redeem" }, "textures/cz/icon/redeem")
       .button({ translate: "cz.wiki" }, "textures/cz/icon/wiki");
 
@@ -45,49 +45,29 @@ class UserPanel {
     }
 
     ui.show(player).then((e) => {
-      switch (e.selection) {
-        case 0:
-          this.shop(player);
-          break;
-        case 1:
-          this.guild(player);
-          break;
-        case 2:
-          this.rune(player);
-          break;
-        case 3:
-          this.leaderboard(player);
-          break;
-        case 4:
-          GachaPanel.home(player);
-          break;
-        case 5:
-          this.quest(player);
-          break;
-        case 6:
-          this.userProfile(player);
-          break;
-        case 7:
-          this.redeem(player);
-          break;
-        case 8:
-          this.wiki(player);
-          break;
-        case 9:
-          AdminPanel.home(player);
-          break;
-      }
-    });
-  }
+      if (e.canceled) return;
 
-  static guild(player: Player): void {
-    GuildPanel.home(player);
+      const menu: ((user: Player) => void)[] = [
+        this.userProfile,
+        this.shop,
+        GuildPanel.home,
+        this.rune,
+        this.leaderboard,
+        GachaPanel.home,
+        this.quest,
+        this.redeem,
+        this.wiki,
+        AdminPanel.home,
+      ];
+
+      menu[e.selection ?? 0].call(this, player);
+    });
   }
 
   static shop(player: Player): void {
     const ui = new ActionFormData().title("cz:global_shop").body({ translate: "cz.shop.body" });
 
-    globalShop.forEach((e) => ui.button({ translate: e.displayName }, e.textures));
+    Terra.world.shops.global.forEach((e) => ui.button({ translate: e.displayName }, e.textures));
 
     ui.show(player).then((e) => {
       if (e.canceled || (e.selection || 0) > globalShop.length) return;
@@ -106,15 +86,17 @@ class UserPanel {
 
       sub.show(player).then((r) => {
         if (r.canceled || (r.selection || 0) > category.items.length) return;
-
-        switch (category.items[r.selection ?? 0].currency) {
-          case "money":
-            this.buyWithMoney(player, category, r.selection ?? 0);
-            break;
-          case "voxn":
-            this.buyWithVoxn(player, category, r.selection ?? 0);
-            break;
+        if (r.selection === category.items.length) {
+          this.shop(player);
+          return;
         }
+
+        const menu: { [key: string]: (user: Player, category: ShopCategory, id: number) => void } = {
+          money: this.buyWithMoney,
+          voxn: this.buyWithVoxn,
+        };
+
+        menu[category.items[r.selection ?? 0].currency].call(this, player, category, r.selection ?? 0);
       });
     });
   }
@@ -140,7 +122,10 @@ class UserPanel {
       .submitButton({ translate: "system.buy.submit" })
       .show(player)
       .then((e) => {
-        if (e.canceled) return;
+        if (e.canceled) {
+          this.shop(player);
+          return;
+        }
 
         const formValues = e.formValues ?? [];
         let amount: number = 0;
@@ -168,6 +153,9 @@ class UserPanel {
         let total = amount * item.amount;
 
         sp.inventory.addItem(item.item, total);
+
+        // back to shop
+        this.shop(player);
       });
   }
   static buyWithVoxn(player: Player, category: ShopCategory, id: number): void {
@@ -192,7 +180,10 @@ class UserPanel {
       .submitButton({ translate: "system.buy.submit" })
       .show(player)
       .then((e) => {
-        if (e.canceled) return;
+        if (e.canceled) {
+          this.shop(player);
+          return;
+        }
 
         const formValues = e.formValues ?? [];
         let amount: number = 0;
@@ -220,6 +211,9 @@ class UserPanel {
         let total = amount * item.amount;
 
         sp.inventory.addItem(item.item, total);
+
+        // back to shop
+        this.shop(player);
       });
   }
 
@@ -442,7 +436,6 @@ Fire Fragile    : ${runeStat["fireFragile"]}%%
     if (player.commandPermissionLevel >= CommandPermissionLevel.Admin) {
       ui.button({ translate: "user.reset.bal" });
       ui.button({ translate: "user.reset.stamina" });
-      ui.button({ translate: "user.reset.temp" });
       ui.button({ translate: "user.reset.thirst" });
       ui.button({ translate: "user.reset.rep" });
       ui.button({ rawtext: [{ translate: "system.add" }, { text: " $5000" }] });
@@ -476,16 +469,16 @@ Fire Fragile    : ${runeStat["fireFragile"]}%%
           sp.setMaxThrist("max", 100);
           sp.setMaxThrist("temp", 0);
           break;
-        case 7:
+        case 6:
           sp.setRep(0);
           break;
-        case 8:
+        case 7:
           sp.addMoney(5000);
           break;
-        case 9:
+        case 8:
           sp.addVoxn(20);
           break;
-        case 10:
+        case 9:
           new Quest(player).setRandom();
           break;
       }
@@ -1403,20 +1396,9 @@ class GachaPanel {
       .then((e) => {
         if (e.canceled) return;
 
-        switch (e.selection) {
-          case 0:
-            this.weapon(player);
-            break;
-          case 1:
-            this.rune(player);
-            break;
-          case 2:
-            this.exchange(player);
-            break;
-          case 3:
-            UserPanel.home(player);
-            break;
-        }
+        const menu: ((user: Player) => void)[] = [this.weapon, this.rune, this.exchange, UserPanel.home];
+
+        menu[e.selection ?? 3].call(this, player);
       });
   }
 

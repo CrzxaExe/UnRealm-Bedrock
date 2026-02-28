@@ -46,6 +46,12 @@ export const epic: { [key: string]: SpecialistWeaponPlayer } = {
     pasifLvl: [0],
     skillLvl: [0, 0, 0],
   },
+  undying: {
+    atk: 8,
+    weapon: "undying",
+    pasifLvl: [0],
+    skillLvl: [0, 0, 0],
+  },
 };
 
 export const legend: { [key: string]: SpecialistWeaponPlayer } = {

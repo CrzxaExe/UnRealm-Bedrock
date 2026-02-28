@@ -14,10 +14,10 @@ import {
   NpcModels,
   Specialist,
   SpecialistData,
-  StatusDecay,
   StatusTypes,
   ModifierTypes,
   ModifierActiveActions,
+  NpcShopItems,
 } from "../module";
 
 // Anti heal data
@@ -182,8 +182,7 @@ interface RedeemData {
   rewards: RedeemRewards[];
 }
 interface RedeemRewards {
-  type: string;
-  item?: string;
+  item: string;
   amount: number;
 }
 
@@ -259,7 +258,7 @@ interface Setting {
   staminaHurt?: number;
   staminaRecovery?: number;
   staminaRun?: number;
-  staterItem?: boolean;
+  starterItem?: boolean;
   starterItemMessage?: string;
   starterItems?: SettingStarterItem[];
   thirstRun?: number;
@@ -314,11 +313,7 @@ interface StatusData {
   stack: boolean;
   decay: string;
 }
-interface StatusFinder {
-  name?: string;
-  type?: StatusTypes;
-  decay?: StatusDecay;
-}
+type StatusFinder = Partial<Omit<StatusData, "duration" | "lvl" | "stack">>;
 
 // Story interface
 interface StoryData {
@@ -361,12 +356,20 @@ type WorldData = {
   setting: Setting;
   leaderboards?: LeaderboardData;
   guilds?: GuildData[];
+  shops: WorldShopData;
+};
+type WorldShopData = {
+  global: ShopCategory[];
+  npc: {
+    farmer: NpcShopItems[];
+  };
 };
 
 type FullWorldData = {
   world: WorldData;
   specialist: SpecialistData[];
   story: StoryData;
+  shops: WorldShopData;
   pityPlayer: PityPlayer[];
   weaponComponent: WeaponComponent[];
   bossChallenge: BossChallengeData;
@@ -433,4 +436,5 @@ export type {
   WeaponSkill,
   WeaponStat,
   WorldData,
+  WorldShopData,
 };

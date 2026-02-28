@@ -17,7 +17,7 @@ export const ZxraLib: {
         in: "req",
         out: "res",
       },
-      version: "1.1.7ts",
+      version: "1.1.8ts",
     },
     {
       name: "WeaponModule",
@@ -140,8 +140,9 @@ export type {
   WeaponSkill,
   WeaponStat,
   WorldData,
+  WorldShopData,
 } from "./types/lib";
-export type { NPC, NpcModels, NpcData, YuriConst, YuriData, YuriModels } from "./types/npc";
+export type { NPC, NpcConst, NpcModels, NpcData, NpcShopItems, YuriConst, YuriData, YuriModels } from "./types/npc";
 export type { BlockRegisterData, ItemRegisterData } from "./types/registry";
 export type {
   SpecialistComponent,
@@ -156,6 +157,7 @@ export type {
 
 // UI exports
 export { AdminPanel } from "./ui/admin";
+export { NpcShopPanel, NpcShop } from "./ui/npcShop";
 export { GachaPanel, GuildPanel, UserPanel } from "./ui/user";
 
 /*

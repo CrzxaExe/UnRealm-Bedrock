@@ -5,6 +5,9 @@ interface Status {
   entity: Entity;
 }
 
+/**
+ * Object status data for Entity
+ */
 class Status {
   constructor(entity: Entity) {
     if (!entity) throw new Error("Missing Entity");
@@ -12,11 +15,22 @@ class Status {
     this.entity = entity;
   }
 
+  /**
+   * Get current Entity status
+   *
+   * @returns StatusData[]
+   */
   getData(): StatusData[] {
     const data = this.entity.getEnt();
 
     return data.status;
   }
+
+  /**
+   * Set current Entity status
+   *
+   * @param newData updated Entity status
+   */
   setData(newData: StatusData[]): void {
     if (!newData) throw new Error("Missing data");
     const data = this.entity.getEnt();
@@ -25,10 +39,20 @@ class Status {
 
     this.entity.setEnt(data);
   }
+
+  /**
+   * CLear current Entity status
+   */
   clearData(): void {
     this.setData([]);
   }
 
+  /**
+   * Get Entity status with finder
+   *
+   * @param finder Status finder Object
+   * @returns Status data
+   */
   getStatus(finder?: StatusFinder): StatusData[] {
     const data = this.getData();
 
@@ -41,6 +65,13 @@ class Status {
 
     return data;
   }
+
+  /**
+   * Check if Entity has some status
+   *
+   * @param finder Status finder Object
+   * @returns boolean
+   */
   hasStatus(finder: StatusFinder): boolean {
     return this.getData().some((e) => {
       const key = Object.keys(finder)[0] as keyof StatusFinder;
@@ -49,6 +80,14 @@ class Status {
   }
 
   // Functional
+
+  /**
+   * Add new, renew, or replace status
+   *
+   * @param name name of status
+   * @param duration duration of status
+   * @param param2 { decay, lvl, stack, type }
+   */
   addStatus(
     name: string,
     duration: number = 1,
@@ -88,6 +127,12 @@ class Status {
 
     this.setData(data);
   }
+
+  /**
+   * Add multiple status
+   *
+   * @param status list of status
+   */
   addStatusMany(status: StatusData[] | StatusData): void {
     if (!status) throw new Error("Missing status");
 
@@ -105,6 +150,12 @@ class Status {
     this.addStatus(name, duration, { type, lvl, decay, stack });
   }
 
+  /**
+   * Decrease duration of status
+   *
+   * @param name name of status
+   * @param duration amount of duration will be decreasing
+   */
   minStatus(name: string, duration: number = 1): void {
     if (!name) throw new Error("Missing name");
 
@@ -121,6 +172,13 @@ class Status {
     data[find].duration -= duration;
     this.setData(data);
   }
+
+  /**
+   * Decrease level of status
+   *
+   * @param name name of status
+   * @param lvl amount of level will be decreasing
+   */
   minStatusLvl(name: string, lvl: number = 1): void {
     if (!name) throw new Error("Missing name");
 
@@ -138,6 +196,12 @@ class Status {
     this.setData(data);
   }
 
+  /**
+   * Remove status from Entity
+   *
+   * @param name name of status
+   * @returns boolean
+   */
   removeStatus(name: string): boolean {
     if (!name) throw new Error("Missing name");
 
@@ -172,11 +236,29 @@ class Status {
   }
 
   // Calculation methods
+
+  /**
+   * Calculate status level by finder
+   *
+   * @param finder { name, type, decay }
+   * @param startingNumber default number before calculating
+   * @returns number
+   */
   normalCalcStatus(finder: StatusFinder, startingNumber: number = 0): number {
     return (
       this.getStatus(finder).reduce((all: number, cur: StatusData) => (all += cur.lvl), startingNumber) | startingNumber
     );
   }
+
+  /**
+   * Calculate status level by finder, but preciese
+   *
+   * @param finder { name, type, decay }
+   * @param startingNumber default number before calculating
+   * @param perLvl per level value
+   * @param most if true, it will only get the most value from the status
+   * @returns number
+   */
   decimalCalcStatus(
     finder: StatusFinder,
     startingNumber: number = 1,

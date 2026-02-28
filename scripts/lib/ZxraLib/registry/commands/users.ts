@@ -6,10 +6,11 @@ import {
   CustomCommandStatus,
   GameMode,
   Player,
+  RawMessage,
   system,
   world,
 } from "@minecraft/server";
-import { Chat, Command, CreateObject, Iyura, Terra, UserPanel } from "../../module";
+import { Chat, Command, CreateObject, Formater, GuildPanel, Iyura, Terra, UserPanel } from "../../module";
 
 /**
  * Command to testing only
@@ -433,7 +434,7 @@ Command.add(
         const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
         if (!plyr) throw new Error("Not a origin player");
 
-        UserPanel.guild(plyr);
+        GuildPanel.home(plyr);
       });
 
       return {
@@ -621,6 +622,85 @@ Command.add(
           : { translate: "system.notSpawnPoint" };
 
         plyr.sendMessage(text);
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    } catch (error: any) {
+      console.warn("[System] Error while run command " + error.message);
+      return {
+        status: CustomCommandStatus.Failure,
+      };
+    }
+  }
+);
+/**
+ *
+ */
+Command.add(
+  {
+    name: "cz:itemdetail",
+    description: "cmd.itemdetail",
+    permissionLevel: CommandPermissionLevel.Any,
+    optionalParameters: [{ name: "isAll", type: CustomCommandParamType.Boolean }],
+  },
+  (origin: CustomCommandOrigin, isAll: Boolean): CustomCommandResult => {
+    try {
+      system.run(() => {
+        if (origin.sourceEntity?.typeId !== "minecraft:player") throw new Error("Not a player");
+
+        const plyr: Player = Terra.getPlayer({ id: origin.sourceEntity.id }) as Player;
+        if (!plyr) throw new Error("Not a origin player");
+        const item = plyr.getComponent("inventory")?.container.getItem(plyr.selectedSlotIndex);
+
+        if (!item) {
+          plyr.sendMessage({ translate: "system.noItem.mainhand" });
+          throw new Error("Not have item on mainhand");
+        }
+
+        const nameTag = item.nameTag;
+        const tags = item.getTags();
+        const durability = item.getComponent("durability");
+        const enchantment = item.getComponent("enchantable")?.getEnchantments();
+        const lore = item.getLore();
+
+        const text: RawMessage = {
+          rawtext: [
+            {
+              text: `${plyr.name} > [§l§e${item.typeId}§r§f${nameTag ? "§i§o(" + nameTag + ")§r§f" : ""}]${item.amount > 0 ? " x " + item.amount : ""}${tags.length > 0 ? "\n  Tags: " + tags.join(", ") + "\n  " : ""}`,
+            },
+          ],
+        };
+
+        if (durability)
+          text.rawtext!.push(
+            { text: "\n  " },
+            {
+              translate: "system.durability",
+              with: [String(durability.maxDurability - durability.damage), String(durability.maxDurability)],
+            }
+          );
+
+        if (enchantment && enchantment.length > 0)
+          text.rawtext!.push(
+            { text: "\n  " },
+            { translate: "system.enchantment" },
+            {
+              text:
+                ":\n" +
+                enchantment
+                  .map((e) => ("     > " + Formater.formatCapitalize(e.type.id) + " " + e.level) as string)
+                  .join("\n"),
+            }
+          );
+
+        if (lore.length > 0)
+          text.rawtext!.push({
+            text: "\n\n§o§d" + lore.map((e) => "  " + e).join("\n") + "§r§f",
+          });
+
+        isAll ? plyr.sendMessage(text) : world.sendMessage(text);
       });
 
       return {

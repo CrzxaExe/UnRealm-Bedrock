@@ -71,7 +71,7 @@ export const settings: Setting = {
   // list of starter item
   starterItems: [{ item: "cz:stats", amount: 1 }],
   // if true,  player first join will get item on starterItems
-  staterItem: true,
+  starterItem: true,
   // increase the thirst down when player is running
   thirstRun: 0.03,
   // user stats features will has requirement for display something

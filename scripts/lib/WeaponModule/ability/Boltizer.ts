@@ -15,6 +15,15 @@ class Boltizer {
       (e) => e.name === "lightning_damage"
     );
 
+    const ent = Terra.getEntityCache(target);
+
+    ent.status.addStatus("electrify", 3, {
+      type: "electrify",
+      decay: "time",
+      lvl: 1,
+      stack: false,
+    });
+
     switch (state) {
       case "skill":
         if (!target.hasTag("boltizer_attack")) {
@@ -24,7 +33,7 @@ class Boltizer {
 
         target.dimension.spawnEntity("minecraft:lightning_bolt", target.location);
         target.removeTag("boltizer_attack");
-        Terra.getEntityCache(target).addDamage(weapon.atk * (pasif?.value ?? 1.5) * multiplier);
+        ent.addDamage(weapon.atk * (pasif?.value ?? 1.5) * multiplier);
         break;
 
       case "attack":
@@ -35,7 +44,7 @@ class Boltizer {
 
         target.dimension.spawnEntity("minecraft:lightning_bolt", target.location);
         target.removeTag("boltizer_skill");
-        Terra.getEntityCache(target).addDamage(weapon.atk * (pasif?.value ?? 1.5) * multiplier, {
+        ent.addDamage(weapon.atk * (pasif?.value ?? 1.5) * multiplier, {
           cause: "lightning",
           damagingEntity: user,
           rune: Terra.getSpecialistCache(user).rune.getRuneStat(),
@@ -82,8 +91,15 @@ class Boltizer {
       }
 
       system.runTimeout(() => {
+        ent.status.addStatus("electrify", 3, {
+          type: "electrify",
+          decay: "time",
+          lvl: 1,
+          stack: false,
+        });
+
         ent.addDamage(
-          weapon.atk *
+          damage *
             (1 -
               count *
                 (weaponData.unique.boltizer.pasifLvl[1]![weapon.pasifLvl[0]]?.find((e) => e.name === "chain_penalty")!
@@ -116,6 +132,13 @@ class Boltizer {
       if (!target) return;
       let ent = Terra.getEntityCache(target.entity);
 
+      ent.status.addStatus("electrify", 3, {
+        type: "electrify",
+        decay: "time",
+        lvl: 1,
+        stack: false,
+      });
+
       ent.addDamage(data.atk * (skill.find((r) => r.name === "atk_percentage")?.value || 1.8) * (multiplier || 1), {
         cause: "lightning",
         damagingEntity: user,
@@ -123,6 +146,30 @@ class Boltizer {
       });
       this.pasif1(user, target.entity, "skill", multiplier, data);
     }, 5);
+  }
+
+  static skill2(user: Player, { sp, multiplier }: SkillLib): void {
+    const data = sp.getSp().weapons.find((e) => e.weapon === "boltizer") || weaponRaw.unique.boltizer,
+      skill = weaponData.unique.boltizer.skillLvl[1]![data.skillLvl[1]!];
+
+    if (!sp.cooldown.canSkill("boltizer_skill2", skill.find((e) => e.name === "cooldown")!.value || 8.5)) return;
+    sp.minStamina(skill?.find((e) => e.name === "stamina")!.value || 18);
+    sp.playAnim("animation.weapon.boltizer.skill2");
+
+    const radius: number = skill.find((e) => e.name === "radius")?.value ?? 5;
+
+    system.runTimeout(() => {
+      sp.getEntityWithinRadius(radius).forEach((e) => {
+        Terra.getEntityCache(e).addDamage(data.atk + (skill.find((e) => e.name === "atk_percentage")?.value ?? 2), {
+          cause: "lightning",
+          damagingEntity: user,
+          rune: sp.rune.getRuneStat(),
+          isSkill: true,
+        });
+
+        this.pasif1(user, e, "attack", multiplier ?? 1, data);
+      });
+    }, 10);
   }
 
   static skill3(user: Player, { sp, multiplier }: SkillLib): void {
@@ -165,6 +212,27 @@ class Boltizer {
       }
       user.triggerEvent("cz:no_ghost");
     }, 23);
+  }
+
+  static skillSpecial(user: Player, { sp }: SkillLib): void {
+    const data = sp.getSp().weapons.find((e) => e.weapon === "boltizer") || weaponRaw.unique.boltizer,
+      skill = weaponData.unique.boltizer.skillLvl[3]![data.skillLvl[3]!];
+
+    if (!sp.cooldown.canSkill("boltizer_skill_special", skill.find((e) => e.name === "cooldown")!.value || 20)) return;
+    sp.minStamina(skill?.find((e) => e.name === "stamina")!.value || 15);
+    sp.playAnim("animation.weapon.boltizer.skill.special");
+
+    const duration: number = skill.find((e) => e.name === "buff_duration")?.value ?? 10;
+    const amplifier: number = skill.find((e) => e.name === "buff_amplifier")?.value ?? 2;
+
+    system.runTimeout(() => {
+      user.triggerEvent("cz:shield_lightning");
+      user.dimension.spawnEntity("minecraft:lightning_bolt", user.location);
+
+      sp.removeAllDebuff();
+      sp.status.addStatus("electrification", duration, { type: "none", decay: "time", lvl: amplifier, stack: false });
+      sp.addEffectOne("resistance", duration, amplifier, false);
+    }, 21);
   }
 }
 

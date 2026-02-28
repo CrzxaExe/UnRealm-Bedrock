@@ -3,6 +3,20 @@ import { Modifiers } from "../module";
 export const all: Modifiers = {};
 
 export const axe: Modifiers = {
+  life_parser: [
+    [
+      { stat: "hp_percentage", value: 0.08 },
+      { stat: "cooldown", value: 5 },
+    ],
+    [
+      { stat: "hp_percentage", value: 0.16 },
+      { stat: "cooldown", value: 4 },
+    ],
+    [
+      { stat: "hp_percentage", value: 0.2 },
+      { stat: "cooldown", value: 3 },
+    ],
+  ],
   shock: [
     [
       { stat: "stun_duration", value: 1 },
@@ -23,6 +37,11 @@ export const hoe: Modifiers = {
     [{ stat: "amount", value: 12 }],
     [{ stat: "amount", value: 15 }],
   ],
+  replanter: [[{ stat: "none", value: 0 }]],
+};
+
+export const mace: Modifiers = {
+  half_life: [[{ stat: "heal", value: 3 }], [{ stat: "heal", value: 5 }], [{ stat: "heal", value: 8 }]],
 };
 
 export const pickaxe: Modifiers = {
@@ -60,6 +79,7 @@ export const sword: Modifiers = {
       { stat: "duration", value: 4 },
     ],
   ],
+  slashing: [[{ stat: "damage", value: 2 }], [{ stat: "damage", value: 3 }], [{ stat: "damage", value: 5 }]],
   poison: [[{ stat: "amplifier", value: 1 }], [{ stat: "amplifier", value: 2 }]],
   vampire: [[{ stat: "heal", value: 1 }], [{ stat: "heal", value: 2 }], [{ stat: "heal", value: 3 }]],
 };

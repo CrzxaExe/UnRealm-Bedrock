@@ -24,10 +24,15 @@ import {
   ItemRegisterData,
   Leaderboard,
   LeaderboardData,
+  NpcShop,
+  NpcShopItems,
+  NpcShopPanel,
+  Parser,
   PityPlayer,
   PlayerFinder,
   PluginsData,
   RedeemData,
+  ShopCategory,
   Specialist,
   SpecialistData,
   SpecialItem,
@@ -35,7 +40,9 @@ import {
   WeaponComponent,
   WeaponComponentDataValue,
   WorldData,
+  WorldShopData,
 } from "../module";
+import { farmerShop, globalShop } from "../data/shop";
 
 /**
  * Utility class to handle all data from world
@@ -55,6 +62,12 @@ class Terra {
   static world: WorldData = {
     redeem: [],
     setting: {},
+    shops: {
+      global: [],
+      npc: {
+        farmer: [],
+      },
+    },
   };
 
   /**
@@ -111,9 +124,13 @@ class Terra {
       this.world.leaderboards = this.getProperty("leaderboard", CreateObject.createLeaderboard()) as LeaderboardData;
       this.world.setting = this.getProperty("setting", CreateObject.createSettings());
       this.world.redeem = this.getProperty("redeem", []) as RedeemData[];
+      this.world.shops.global = this.getProperty("global_shop", Parser.clone(globalShop)) as ShopCategory[];
+      this.world.shops.npc.farmer = this.getProperty("farmer_shop", Parser.clone(farmerShop)) as NpcShopItems[];
       this.entities = this.getProperty("entities", []) as EntityData[];
       this.pityPlayer = this.getProperty("pity", []) as PityPlayer[];
       this.specialist = this.getProperty("specialist", []) as SpecialistData[];
+
+      NpcShop.farmer = new NpcShopPanel(this.world.shops.npc.farmer, "farmer");
 
       // Item Event Load Counter
       console.warn(
@@ -152,6 +169,7 @@ class Terra {
     this.world.leaderboards = data.world.leaderboards as LeaderboardData;
     this.world.setting = data.world.setting;
     this.world.redeem = data.world.redeem as RedeemData[];
+    this.world.shops = data.shops as WorldShopData;
     this.entities = [] as EntityData[];
     this.pityPlayer = data.pityPlayer as PityPlayer[];
     this.specialist = data.specialist as SpecialistData[];
@@ -167,6 +185,7 @@ class Terra {
       world: Terra.world,
       specialist: Terra.specialist,
       story: Terra.story,
+      shops: Terra.world.shops,
       pityPlayer: Terra.pityPlayer,
       weaponComponent: Terra.weaponComponent,
       bossChallenge: Terra.bossChallenge ?? { boss: undefined, participants: [] },

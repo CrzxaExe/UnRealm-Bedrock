@@ -1,7 +1,6 @@
 import { EntityHealthComponent, Entity as mcEntity, MolangVariableMap, Player } from "@minecraft/server";
-import { Calc, Specialist, Terra, Weapon } from "../../ZxraLib/module";
-import { Boltizer, Liberator, Reaper, slayerLostHPPercentation, weaponData, weaponRaw } from "../module";
-import { Destiny } from "../ability/Destiny";
+import { Specialist, Terra, Weapon } from "../../ZxraLib/module";
+import { Boltizer, Destiny, Liberator, weaponData, weaponRaw, WeaponTrait } from "../module";
 
 // Boltizer
 Weapon.addHitPasif("boltizer", (user: Player, target: mcEntity, { damage }: { damage: number }) => {
@@ -27,11 +26,7 @@ Weapon.addHitPasif("destiny", (user: Player, target: mcEntity, { sp }: { sp: Spe
   const ent = Terra.getEntityCache(target);
 
   const mul = Destiny.pasif2(ent, sp, weapon);
-  ent.addDamage(weapon.atk * mul * Calc.distance(target.location, user.location), {
-    cause: "entityAttack",
-    damagingEntity: user,
-  });
-
+  WeaponTrait.spear(target, user, weapon.atk, sp.rune.getRuneStat(), mul);
   Destiny.pasif1(ent, sp, weapon);
 });
 
@@ -44,7 +39,7 @@ Weapon.addHitPasif("liberator", (user: Player, _: unknown, { sp }: { sp: Special
 
   const healAmount = 1 + stack;
 
-  Reaper.reap(sp, (entity: mcEntity, healFunction: ReaperHealFunction) => {
+  WeaponTrait.reaper(sp, (entity: mcEntity, healFunction: ReaperHealFunction) => {
     const ent = Terra.getEntityCache(entity);
 
     ent.particles({
@@ -78,7 +73,7 @@ Weapon.addKillPasif("liberator", (user: Player, _: unknown, { sp }: { sp: Specia
 // Kyle
 Weapon.addHitPasif("kyles", (user: Player, target: mcEntity, { sp }: { sp: Specialist }) => {
   const hp = user.getComponent("health") as EntityHealthComponent;
-  const hpPercentage: number = slayerLostHPPercentation(user);
+  const hpPercentage: number = WeaponTrait.slayerLostHPPercentation(user);
 
   const rune = sp.rune.getRuneStat();
 

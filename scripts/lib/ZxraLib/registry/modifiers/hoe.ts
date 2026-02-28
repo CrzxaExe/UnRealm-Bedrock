@@ -1,11 +1,11 @@
-import { Block, Player, system } from "@minecraft/server";
+import { Block, BlockPermutation, Player, system } from "@minecraft/server";
 import { Modifier, ModifierActiveActionsEnum, ModifierStats } from "../../module";
 
 Modifier.add(
   "experiencer",
   "hoe",
   ModifierActiveActionsEnum.BeforeBreak,
-  (user: Player, target: Block, lib: { level: number; mod: ModifierStats[] }) => {
+  (user: Player, target: Block, lib: { mod: ModifierStats[] }) => {
     if (!user || !target) return;
     if (!target.getTags().includes("minecraft:crop")) return;
 
@@ -18,3 +18,13 @@ Modifier.add(
     });
   }
 );
+
+Modifier.add("replanter", "hoe", ModifierActiveActionsEnum.AfterBreak, (user: Player, target: Block) => {
+  if (!user || !target) return;
+  if (!target.getTags().includes("minecraft:crop")) return;
+
+  const grow = target.permutation.getState("growth");
+  if (!grow || grow < 7) return;
+
+  target.setPermutation(BlockPermutation.resolve(target.typeId, { growth: 0 }));
+});

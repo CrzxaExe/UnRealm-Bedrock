@@ -1,14 +1,17 @@
 import { Player } from "@minecraft/server";
 import { SkillLib, Weapon } from "../ZxraLib/module";
-import { Boltizer, Kyle, Liberator } from "../WeaponModule/module";
-import { Mudrock } from "../WeaponModule/ability/Mudrock";
+import { Boltizer, Kyle, Liberator, Mudrock } from "../WeaponModule/module";
 
-// BOltizer
+// Boltizer
 Weapon.registerSkill("boltizer", (user: Player, lib: SkillLib) => {
-  if (!user.isSneaking && user.isOnGround) {
-    Boltizer.skill1(user, lib);
-  } else if (!user.isOnGround) {
+  if (user.isSneaking && user.isOnGround) {
+    Boltizer.skill2(user, lib);
+  } else if (!user.isSneaking && !user.isOnGround) {
     Boltizer.skill3(user, lib);
+  } else if (user.isSneaking && !user.isOnGround) {
+    Boltizer.skillSpecial(user, lib);
+  } else {
+    Boltizer.skill1(user, lib);
   }
 });
 

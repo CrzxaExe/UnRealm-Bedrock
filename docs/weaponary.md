@@ -37,7 +37,7 @@ _List:_
 - [Flute] Use melody for casting
 - [Greatsword] High damage but slow attack
 - [Gun] Long range weapon
-- [Hammer] Deals additional damage depending on target HP(Max 200% Atk)
+- [Hammer] Deals additional damage depending on 20% target HP(Max 200% Atk)
 - [Katana] Deals additional damage if target has debuff or had been knockup
 - [Lance] Gets boost damage everytime use dash
 - [Loadout] Can switch weapon type
@@ -46,7 +46,7 @@ _List:_
 - [Slayer] More HP lost will increase damage, gain 20% Healing Effectifity
 - [Spear] Deals more damage depending on target location, more damage if closer with user
 - [Staff] Can casting spell
-- [Vitalis] Can heal allies by 50% of damage dealt
+- [Vitalist] Can heal allies by 50% of damage dealt
 
 ## Tag
 

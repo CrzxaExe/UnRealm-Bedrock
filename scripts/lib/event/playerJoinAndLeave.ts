@@ -24,7 +24,7 @@ world.afterEvents.playerSpawn.subscribe(({ initialSpawn, player }: PlayerSpawnAf
     Terra.createSpecialistCache();
 
     if (player.hasTag("firstJoin")) return;
-    if (!Terra.world.setting?.staterItem) return;
+    if (!Terra.world.setting?.starterItem) return;
     const starterItems = Terra.world.setting.starterItems || [];
 
     player.sendMessage({ translate: Terra.world.setting?.starterItemMessage || "system.welcome.item" });

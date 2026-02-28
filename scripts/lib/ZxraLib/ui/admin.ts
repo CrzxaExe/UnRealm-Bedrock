@@ -1,6 +1,6 @@
 import { Player } from "@minecraft/server";
 import { ActionFormData, MessageFormData, ModalFormData } from "@minecraft/server-ui";
-import { Setting, settings, Terra } from "../module";
+import { Parser, RedeemData, Setting, settings, Terra } from "../module";
 
 class AdminPanel {
   static home(player: Player): void {
@@ -8,20 +8,16 @@ class AdminPanel {
       .title("cz:admin_panel")
       .body({ translate: "cz.admin_panel.body" })
       .button({ translate: "settings.world" })
+      .button({ translate: "system.admin_redeem" })
       .button({ translate: "system.plugins" })
 
       .show(player)
       .then((e) => {
         if (e.canceled) return;
 
-        switch (e.selection) {
-          case 0:
-            this.world(player);
-            break;
-          case 1:
-            this.pluginsList(player);
-            break;
-        }
+        const menu: ((user: Player) => void)[] = [this.world, this.redeemManagement, this.pluginsList];
+
+        menu[e.selection ?? 0].call(this, player);
       });
   }
 
@@ -39,31 +35,25 @@ class AdminPanel {
       .then((e) => {
         if (e.canceled) return;
 
-        switch (e.selection) {
-          case 0:
-            this.settings(player);
-            break;
-          case 1:
+        const menu: ((user: Player) => void)[] = [
+          this.settings,
+          function (user: Player) {
             Terra.save(true);
-            this.world(player);
-            break;
-          case 2:
-            this.exportData(player);
-            break;
-          case 3:
-            this.importData(player);
-            break;
-          case 4:
-            this.resetSettings(player);
-            break;
-          case 5:
-        }
+            AdminPanel.world(user);
+          },
+          this.exportData,
+          this.importData,
+          this.resetSettings,
+        ];
+
+        menu[e.selection ?? 0]?.call(this, player);
       });
   }
 
   static settings(player: Player): void {
     const {
       // General
+      chainBreakFilter,
       debug,
       uiLevelRequirement,
       useBzbRules,
@@ -79,7 +69,7 @@ class AdminPanel {
       shopMultiplier,
       starterItemMessage,
       starterItems,
-      staterItem,
+      starterItem,
       xpMultiplier,
       // Stamina
       staminaAction,
@@ -90,12 +80,17 @@ class AdminPanel {
       staminaRun,
       // Thirst
       thirstRun,
-    }: Setting = Terra.world.setting || settings;
+    }: Setting = Terra.world.setting || Parser.clone(settings);
 
     new ModalFormData()
       .title("cz:admin_settings")
       // General
       .label({ translate: "option.label.general" })
+      .textField(
+        { translate: "option.chainBreakFilter" },
+        { translate: "type.string" },
+        { defaultValue: String((chainBreakFilter ?? []).join(", ")) }
+      )
       .toggle({ translate: "option.debug" }, { defaultValue: debug })
       .textField(
         { translate: "option.uuidLength" },
@@ -129,6 +124,21 @@ class AdminPanel {
         { translate: "option.guildCreateCost" },
         { translate: "type.number" },
         { defaultValue: String(guildCreateCost) }
+      )
+      .textField(
+        { translate: "option.shopMultiplier" },
+        { translate: "type.number" },
+        { defaultValue: String(shopMultiplier) }
+      )
+      .textField(
+        { translate: "option.starterItemMessage" },
+        { translate: "type.string" },
+        { defaultValue: starterItemMessage }
+      )
+      .textField(
+        { translate: "option.starterItems" },
+        { translate: "type.string" },
+        { defaultValue: (starterItems ?? []).map((r) => r.item + "*" + r.amount).join(",") }
       )
       .divider()
       // Stamina
@@ -248,6 +258,33 @@ Out : ${pl.namespace}:${pl.endpoint.out}
           this.pluginsList(player);
         });
     });
+  }
+
+  static redeemManagement(player: Player): void {
+    const redeems = Terra.world.redeem;
+
+    const ui = new ActionFormData().title({ translate: "cz:redeem_management" }).body({ translate: "cz.admin.redeem" });
+
+    if (redeems.length > 0) redeems.forEach((e) => ui.button({ text: e.key }));
+
+    ui.button({ rawtext: [{ text: "<" }, { translate: "system.add" }, { text: ">" }] })
+      .show(player)
+      .then((e) => {
+        if (e.canceled) return;
+      });
+  }
+
+  static redeemEdit(player: Player, data: RedeemData | undefined): void {
+    new ModalFormData()
+      .title({ translate: "cz:redeem_item" })
+      .textField({ translate: "system.redeem.key" }, { translate: "type.string" }, { defaultValue: data?.key })
+      .textField(
+        { translate: "system.redeem.rewards" },
+        { translate: "type.string" },
+        { defaultValue: data?.rewards.map((e) => "" + e.item + "*" + e.amount).join(",") }
+      )
+      .submitButton({ translate: "system.comfirm" })
+      .show(player);
   }
 }
 

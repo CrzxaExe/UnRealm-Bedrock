@@ -1,3 +1,5 @@
+import { Currency } from "../module";
+
 type NPC = {
   data: NpcData;
   models: NpcModels;
@@ -21,4 +23,15 @@ type YuriModels = {
   components?: [];
 };
 
-export { NPC, NpcConst, NpcData, NpcModels, YuriConst, YuriData, YuriModels };
+// Shop Npc
+type NpcShopItems = {
+  item: string;
+  display: string;
+  texture: string;
+  price: {
+    buy: number;
+    sell: number;
+  };
+  currency: Currency;
+};
+export { NPC, NpcConst, NpcData, NpcModels, NpcShopItems, YuriConst, YuriData, YuriModels };

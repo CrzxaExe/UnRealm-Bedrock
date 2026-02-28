@@ -1,4 +1,4 @@
-import { ShopCategory } from "../module";
+import { NpcShopItems, ShopCategory } from "../module";
 
 export const globalShop: ShopCategory[] = [
   {
@@ -7,20 +7,12 @@ export const globalShop: ShopCategory[] = [
     textures: "textures/blocks/stone",
     items: [
       {
-        item: "azalea_leaves",
-        name: "tile.azalea_leaves.name",
-        amount: 10,
-        price: 2.3,
-        currency: "money",
-        textures: "textures/blocks/azalea_leaves",
-      },
-      {
         item: "basalt",
         name: "tile.basalt.name",
         amount: 10,
         price: 5.7,
         currency: "money",
-        textures: "textures/blocks/basalt",
+        textures: "textures/blocks/basalt_side",
       },
       {
         item: "blackstone",
@@ -31,20 +23,12 @@ export const globalShop: ShopCategory[] = [
         textures: "textures/blocks/blackstone",
       },
       {
-        item: "brick",
-        name: "tile.brick.name",
+        item: "bricks",
+        name: "tile.brick_block.name",
         amount: 10,
         price: 4.6,
         currency: "money",
         textures: "textures/blocks/brick",
-      },
-      {
-        item: "blackstone",
-        name: "tile.blackstone.name",
-        amount: 10,
-        price: 5.6,
-        currency: "money",
-        textures: "textures/blocks/blackstone",
       },
       {
         item: "calcite",
@@ -83,7 +67,7 @@ export const globalShop: ShopCategory[] = [
         amount: 1,
         price: 8.3,
         currency: "money",
-        textures: "textures/items/bell",
+        textures: "textures/items/villagebell",
       },
       {
         item: "bookshelf",
@@ -148,6 +132,14 @@ export const globalShop: ShopCategory[] = [
     textures: "textures/ui/nature",
     items: [
       {
+        item: "azalea_leaves",
+        name: "tile.azalea_leaves.name",
+        amount: 10,
+        price: 2.3,
+        currency: "money",
+        textures: "textures/blocks/azalea_leaves",
+      },
+      {
         item: "bush",
         name: "tile.bush.name",
         amount: 2,
@@ -176,7 +168,7 @@ export const globalShop: ShopCategory[] = [
   {
     name: "redstone",
     displayName: "category.redstone",
-    textures: "textures/items/redstone",
+    textures: "textures/items/redstone_dust",
     items: [
       {
         item: "calibrated_sculk_sensor",
@@ -529,3 +521,13 @@ export const guildShop: { [key: string]: GuildShopItem[] } = {
     },
   ],
 };
+
+export const farmerShop: NpcShopItems[] = [
+  {
+    item: "carrot",
+    currency: "voxn",
+    display: "item.carrot.name",
+    texture: "textures/items/carrot",
+    price: { buy: 0.6, sell: 0.3 },
+  },
+];

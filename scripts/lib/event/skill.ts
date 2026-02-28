@@ -1,6 +1,10 @@
 import { ItemReleaseUseAfterEvent, world } from "@minecraft/server";
 
+import "../weapon/epic";
+import "../weapon/legend";
+import "../weapon/rare";
 import "../weapon/unique";
+
 import { CreateObject, Terra, Weapon } from "../ZxraLib/module";
 
 world.afterEvents.itemReleaseUse.subscribe(async ({ itemStack, source, useDuration }: ItemReleaseUseAfterEvent) => {

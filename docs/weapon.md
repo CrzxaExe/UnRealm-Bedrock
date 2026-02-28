@@ -99,14 +99,14 @@ Skills:
 > [Conductor Strike*], 14 Stamina | 5s CD | No sneak<br/>
 > Strike through target and deals 180% Atk as Lightning damage. Doesn't chainning
 >
-> [Foreground Shockwave], 18 Stamina | 8.5s CD | Sneak<br/>
+> [Foreground Shockwave*], 18 Stamina | 8.5s CD | Sneak<br/>
 > Summon shockwave on user location. enemy inside area will get 200% Atk as Lightning damage and counted as attacked target
->
-> [Self Conduction], 20 Stamina | 15s CD | Has %Electricity status<br/>
-> Summon Lightning strike to self, clear all debuff and gain protection effect for a sec. On duration, enemy that attacking user will get 50% Atk as Lightning damage
 >
 > [Thunder Strom*], 26 Stamina | 25s CD | Jump<br/>
 > Lock one target to summon 3 lightning strike to deals 220% Atk as Lightning damage and chaining to 3 target nearby.
+>
+> [Self Conduction*], 20 Stamina | 15s CD | Jump & Sneak<br/>
+> Summon Lightning strike to self, clear all debuff and gain protection effect for a sec. On duration, enemy that attacking user will get 50% Atk as Lightning damage
 
 ## Bringer Concept
 
@@ -218,15 +218,15 @@ Trait `[Century]`
 
 Pasif:
 
-> [Sharp Slice*] When attacking enemy, increase damage +10% Atk. Can be stacked up to 5 times
+> [Sharp Slice*] When attacking enemy, increase damage by +10% Atk. Can be stacked up to 5 times
 
 Skills:
 
-> [Excellent Steel Swing], 20 Stamina | 3.5s CD | No Sneak<br/>
-> On Normal state, attack all target on cone area deals 200% Atk and create shockwave damage as 100% Atk to enemy within radius.<br/>
-> On Sharped state, smash target to deals 190%
+> [Excellent Steel Swing*], 20 Stamina | 3.5s CD | No Sneak<br/>
+> On Normal state, attack all target on cone area deals 200% Atk and create shockwave damage as 100% Atk to enemy within area.<br/>
+> On Sharped state, smash target to deals 180%
 >
-> [Intuition State], 18 Stamina | 10s CD | Sneak<br/>
+> [Intuition State*], 18 Stamina | 10s CD | Sneak<br/>
 > Swith state between Normal and Sharped. On Sharped state, ATK will no longer AOE but damage increase to 250%
 
 ## Crusher Concept
@@ -577,9 +577,10 @@ Pasif:
 
 Skills:
 
-> []
+> [Fuse Imp*], 14 Stamina | 5.5s | No Sneak<br/>
+> Slicing one target to deals 180% Atk. If the distance is greater than 3 block, set target on fire
 >
-> [Fire Ignitions], 26 Stamina | 15s CD | Jump<br/>
+> [Fire Ignitions*], 26 Stamina | 15s CD | Jump<br/>
 > Striking ground to deals 280% Atk to all enemy within range
 
 ## Mudrock Concept
@@ -803,18 +804,18 @@ Trait `[Artsword]`
 
 Pasif:
 
-> [Return Into Self], Killing enemy will reset all weapon cooldown and get +30% Atk for 10 sec. (Cannot be stacked)
+> [Return Into Self*], Killing enemy will reset all weapon cooldown and get +30% Atk for 10 sec. (Cannot be stacked)
 
 Skill:
 
-> [Insuption Ichor], 12 Stamina | 8s CD | No Sneak<br/>
+> [Insuption Ichor*], 12 Stamina | 8s CD | No Sneak<br/>
 > Attack one target to deals 200% Atk as Art damage
 >
-> [Ichoring Gaze], 20 Stamina | 14s CD | Sneak<br/>
+> [Ichoring Gaze*], 20 Stamina | 14s CD | Sneak<br/>
 > Attacking all target in a half of circle area. Deals 170% Atk as Art damage
 >
-> [Countless Times Ichor], 24 Stamina | 25c CD | Jump<br/>
-> Jump to front to deals 350% Atk as Art damage to all enemy and push a bit the enemy
+> [Countless Times Ichor*], 24 Stamina | 25c CD | Jump<br/>
+> Jump to front to deals 350% Atk as Art damage to all enemy and knockup a bit the enemy
 
 ## Vitage Concept
 
@@ -854,7 +855,7 @@ Pasif:
 
 Skill:
 
-> [Incarm*], 18 Stamina | 6.5s CD | No Sneak<br/>
+> [Incarm], 18 Stamina | 6.5s CD | No Sneak<br/>
 > Shoot art bullet to deals 300% Atk as Art damage
 >
 > [Stanc Quiest], 24 Stamina | 10s CD | Sneak<br/>

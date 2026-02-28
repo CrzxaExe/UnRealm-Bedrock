@@ -515,6 +515,7 @@
           "size": ["100%", "100%"],
           "anchor_from": "center",
           "anchor_to": "center",
+          "anims": ["@cz_anim.start_screen_cz"],
           "controls": [
             {
               "scrn": {
@@ -522,8 +523,17 @@
                 "texture": "textures/ui/black.png",
                 "size": ["100%", "100%"],
                 "fill": true,
-                "uv": "@cz_anim.start_screen_cz",
                 "layer": 69
+              }
+            },
+            {
+              "white_load": {
+                "type": "image",
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "texture": "textures/ui/white_bg",
+                "uv": "@cz_anim.white_load_anim",
+                "layer": 71
               }
             },
             {

@@ -19,6 +19,22 @@ Modifier.add(
 );
 
 Modifier.add(
+  "fire_spreader",
+  "sword",
+  ModifierActiveActionsEnum.AfterHit,
+  (_: Player, target: mcEntity, lib: { mod: ModifierStats[] }) => {
+    if (!target || !target.getComponent("onfire")) return;
+
+    const radius: number = lib.mod.find((e) => e.stat === "radius")?.value ?? 1.5;
+    const duration: number = lib.mod.find((e) => e.stat === "duration")?.value ?? 3;
+
+    Terra.getEntityCache(target)
+      .getEntityWithinRadius(radius)
+      .forEach((e: mcEntity) => e.setOnFire(duration));
+  }
+);
+
+Modifier.add(
   "poison",
   "sword",
   ModifierActiveActionsEnum.AfterHit,
@@ -33,6 +49,32 @@ Modifier.add(
 );
 
 Modifier.add(
+  "slashing",
+  "sword",
+  ModifierActiveActionsEnum.AfterHit,
+  (user: Player, target: mcEntity, lib: { mod: ModifierStats[] }) => {
+    if (!user) return;
+    const sp = Terra.getSpecialistCache(user);
+
+    if (sp.cooldown.hasCd("slashing_state")) {
+      sp.cooldown.addCd("slashing_state", 0.5);
+      return;
+    }
+
+    sp.cooldown.addCd("slashing_state", 0.5);
+
+    Terra.getEntityCache(target)
+      .getEntityWithinRadius(1.5)
+      .forEach((e) => {
+        Terra.getEntityCache(e).addDamage(lib.mod.find((r) => r.stat === "damage")?.value ?? 3, {
+          cause: "entityAttack",
+          damagingEntity: user,
+        });
+      });
+  }
+);
+
+Modifier.add(
   "vampire",
   "sword",
   ModifierActiveActionsEnum.AfterHit,
@@ -41,21 +83,5 @@ Modifier.add(
       return;
 
     Terra.getEntityCache(user).heal(lib.mod.find((e) => e.stat === "heal")?.value ?? 1);
-  }
-);
-
-Modifier.add(
-  "fire_spreader",
-  "sword",
-  ModifierActiveActionsEnum.AfterHit,
-  (_: Player, target: mcEntity, lib: { mod: ModifierStats[] }) => {
-    if (!target || !target.getComponent("onfire")) return;
-
-    const radius: number = lib.mod.find((e) => e.stat === "radius")?.value ?? 1.5;
-    const duration: number = lib.mod.find((e) => e.stat === "duration")?.value ?? 3;
-
-    Terra.getEntityCache(target)
-      .getEntityWithinRadius(radius)
-      .forEach((e: mcEntity) => e.setOnFire(duration));
   }
 );

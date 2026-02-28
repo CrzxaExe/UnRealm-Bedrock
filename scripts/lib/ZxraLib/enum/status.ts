@@ -12,6 +12,7 @@ export const StatusTypesEnum = {
   Attack: "attack",
   Bind: "bind",
   ElementalFragile: "elemental_fragile",
+  Electrify: "electrify",
   FireFragile: "fire_fragile",
   Fragile: "fragile",
   MudrockShield: "mudrock_shield",

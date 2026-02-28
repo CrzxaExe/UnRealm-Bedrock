@@ -1,6 +1,6 @@
 import { Player, system, Entity as mcEntity, MolangVariableMap } from "@minecraft/server";
 import { CreateObject, SkillLib, SpecialistWeaponPlayer, Terra } from "../../ZxraLib/module";
-import { slayerLostHPPercentation, weaponData, weaponRaw } from "../module";
+import { weaponData, weaponRaw, WeaponTrait } from "../module";
 
 class Kyle {
   static pasif1(
@@ -35,7 +35,7 @@ class Kyle {
             data.atk * skill.find((e) => e.name === "atk_percentage")!.value +
               (hp?.effectiveMax || 20) *
                 skill.find((e) => e.name === "health_percentage")!.value *
-                slayerLostHPPercentation(user) *
+                WeaponTrait.slayerLostHPPercentation(user) *
                 (multiplier || 1)
           ),
           {
@@ -86,7 +86,7 @@ class Kyle {
             data.atk * skill.find((e) => e.name === "zelxt_atk_percentage")!.value +
               (hp?.effectiveMax || 20) *
                 skill.find((e) => e.name === "zelxt_health_percentage")!.value *
-                slayerLostHPPercentation(user) *
+                WeaponTrait.slayerLostHPPercentation(user) *
                 pasif *
                 (multiplier || 1),
             {
@@ -119,7 +119,7 @@ class Kyle {
                 data.atk * skill.find((e) => e.name === "zelxt_atk_percentage")!.value +
                   (hp?.effectiveMax || 20) *
                     skill.find((e) => e.name === "zelxt_health_percentage")!.value *
-                    slayerLostHPPercentation(user) *
+                    WeaponTrait.slayerLostHPPercentation(user) *
                     pasif *
                     (multiplier || 1),
                 {
@@ -168,7 +168,7 @@ class Kyle {
             data.atk * skill?.find((e) => e.name === "atk_percentage")!.value +
               (hp?.effectiveMax || 20) *
                 skill?.find((e) => e.name === "zelxt_health_percentage")!.value *
-                slayerLostHPPercentation(user) *
+                WeaponTrait.slayerLostHPPercentation(user) *
                 (multiplier || 1),
             {
               cause: "entityAttack",
@@ -219,7 +219,7 @@ class Kyle {
           data.atk * skill?.find((e) => e.name === "zelxt_atk_percentage")!.value +
             (hp?.effectiveMax || 20) *
               skill?.find((e) => e.name === "zelxt_health_percentage")!.value *
-              slayerLostHPPercentation(user) *
+              WeaponTrait.slayerLostHPPercentation(user) *
               pasif *
               (multiplier || 1),
           {
@@ -262,7 +262,7 @@ class Kyle {
           data.atk +
             (hp?.effectiveMax || 20) *
               skill.find((e) => e.name === "zelxt_health_percentage")!.value *
-              slayerLostHPPercentation(user) *
+              WeaponTrait.slayerLostHPPercentation(user) *
               (multiplier || 1),
           {
             cause: "entityAttack",
@@ -317,7 +317,7 @@ class Kyle {
             data.atk +
               (hp?.effectiveMax || 20) *
                 skill.find((e) => e.name === "zelxt_health_percentage")!.value *
-                slayerLostHPPercentation(user) *
+                WeaponTrait.slayerLostHPPercentation(user) *
                 pasif *
                 (1 + stack / 200) *
                 (multiplier || 1),

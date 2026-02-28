@@ -2,9 +2,20 @@ import { Player } from "@minecraft/server";
 import { CreateObject, LbData, LeaderboardData, LeaderboardSystemType, LeaderboardType, Terra } from "../module";
 
 class Leaderboard {
+  /**
+   * Get current leaderboard data
+   *
+   * @returns LeaderboardData
+   */
   getData(): LeaderboardData {
     return Terra.world.leaderboards || CreateObject.createLeaderboard();
   }
+
+  /**
+   * Set current leaderboard data
+   *
+   * @param data Updated leaderboard data
+   */
   setData(data: LeaderboardData): void {
     if (!data) throw new Error("Missing data");
 
@@ -12,6 +23,13 @@ class Leaderboard {
   }
 
   // methods
+
+  /**
+   * Get leaderboard by type
+   *
+   * @param leaderboardType type of leaderboard
+   * @returns LbData[]
+   */
   getLeaderBoard(leaderboardType: LeaderboardType): LbData[] {
     const data = this.getData();
 
@@ -62,6 +80,13 @@ class Leaderboard {
     return obj;
   }
 
+  /**
+   * Adding data to leaderboard
+   *
+   * @param type Leaderboard type
+   * @param id player id
+   * @param amount amount of leaderboard value
+   */
   addLb(type: LeaderboardSystemType, id: string, amount: number = 1): void {
     if (id === "") throw new Error("Missing id");
     const data = this.getData(),
@@ -75,6 +100,9 @@ class Leaderboard {
     this.setData(data);
   }
 
+  /**
+   * Reset leaderboard data
+   */
   resetLb(): void {
     this.setData(CreateObject.createLeaderboard());
   }

@@ -241,10 +241,16 @@
               "kyle_draw": "v.draw_sword"
             },
             {
+              "boltizer_charge": "q.get_equipped_item_name == 'boltizer'"
+            },
+            {
               "kyle_charge": "v.kyles"
             },
             {
               "liberator_charge": "q.get_equipped_item_name == 'liberator'"
+            },
+            {
+              "undying_charge": "q.get_equipped_item_name == 'undying'"
             },
             {
               "draw_long": "v.draw_long"
@@ -287,10 +293,16 @@
         "draw_sneak": {
           "animations": [
             {
+              "boltizer_charge": "q.get_equipped_item_name == 'boltizer'"
+            },
+            {
               "kyle_charge_sneak": "v.kyles"
             },
             {
               "liberator_charge_sneak": "q.get_equipped_item_name == 'liberator'"
+            },
+            {
+              "undying_charge": "q.get_equipped_item_name == 'undying'"
             }
           ],
           "blend_transition": 0.3,

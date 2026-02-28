@@ -61,6 +61,14 @@ class Formater {
   static formatRarity(name: string, format: GachaRarity): string {
     return `${rarityColor[format]}[${name}]§r§f`;
   }
+
+  /**
+   * Format and sentence to capitalize every first letter
+   * @param text
+   */
+  static formatCapitalize(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
 }
 
 export { Formater };

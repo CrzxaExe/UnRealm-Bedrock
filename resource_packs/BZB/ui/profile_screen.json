@@ -1,6 +1,6 @@
 {
   "namespace": "profile",
-  
+
   "profile_screen": {
     "$screen_bg_content": "cz_common.background_lobby",
     "modifications": [

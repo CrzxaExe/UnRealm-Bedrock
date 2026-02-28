@@ -1,4 +1,13 @@
-import { Block, Dimension, Entity as mcEntity, ItemStack, Player, system, BlockPermutation } from "@minecraft/server";
+import {
+  Block,
+  Dimension,
+  Entity as mcEntity,
+  ItemStack,
+  Player,
+  system,
+  BlockPermutation,
+  world,
+} from "@minecraft/server";
 import {
   Modifier,
   ModifierActiveActionsEnum,
@@ -97,15 +106,18 @@ Modifier.add(
       if (!nextBlock) return;
 
       if (amount === 0) return;
-      destroyFunction(nextBlock, amount - 1, typeId);
-      system.run(() => {
+      system.runTimeout(() => {
+        destroyFunction(nextBlock, amount - 1, typeId);
         if (SURVIVE_MODE.includes(user.getGameMode())) {
           user.runCommand(
             `loot spawn ${block.location.x} ${block.location.y} ${block.location.z} mine ${block.location.x} ${block.location.y} ${block.location.z} mainhand`
           );
+          // world
+          //   .getLootTableManager()
+          //   .generateLootFromBlock(block, user.getComponent("inventory")?.container.getItem(user.selectedSlotIndex));
         }
         block.setPermutation(BlockPermutation.resolve("minecraft:air"));
-      });
+      }, 4);
     };
 
     destroyFunction(target, length, target.typeId);

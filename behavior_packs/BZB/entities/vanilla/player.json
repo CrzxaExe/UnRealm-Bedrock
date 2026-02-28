@@ -3,6 +3,7 @@
   "minecraft:entity": {
     "description": {
       "identifier": "minecraft:player",
+      "spawn_category": "creature",
       "is_spawnable": false,
       "is_summonable": false,
       "is_experimental": false,
@@ -272,6 +273,28 @@
         },
         "minecraft:skin_id": {
           "value": 2
+        }
+      },
+      "shield_lightning": {
+        "minecraft:timer": {
+          "time": 1,
+          "looping": false,
+          "time_down_event": {
+            "event": "cz:shield_break"
+          }
+        },
+        "minecraft:damage_sensor": {
+          "triggers": {
+            "deals_damage": "no",
+            "on_damage": {
+              "filters": {
+                "test": "is_family",
+                "subject": "other",
+                "value": "lightning"
+              },
+              "event": "cz:shield_break"
+            }
+          }
         }
       },
       "shield_magic_1": {
@@ -762,6 +785,11 @@
         },
         "remove": {
           "component_groups": ["no_variant"]
+        }
+      },
+      "cz:shield_lightning": {
+        "add": {
+          "component_groups": ["shield_lightning"]
         }
       },
       "cz:mudrock_shield": {

@@ -169,7 +169,7 @@
           "layer": 1,
 
           "text": "#text",
-          "font_scale_factor": 0.78,
+          "font_scale_factor": 0.76,
 
           "bindings": [
             {
@@ -199,7 +199,11 @@
   "hotbar_panel": {
     "controls": [
       { "hotbar_elipses_panel_left@hud.hotbar_elipses_panel_left_content": {} },
-      { "hotbar_grid@hud.hotbar_grid": {} },
+      {
+        "hotbar_grid@hud.hotbar_grid": {
+          "alpha": 0.5
+        }
+      },
       { "hotbar_elipses_panel_right@hud.hotbar_elipses_panel_right_content": {} },
       { "hotbar_end_cap@hud.hotbar_end_cap": {} }
     ]

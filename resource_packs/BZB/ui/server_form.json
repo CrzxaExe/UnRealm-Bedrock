@@ -72,15 +72,14 @@
         }
       },
       {
-        "cz_form3@cz_common.yuri_panel_ui": {
+        "cz_form3@cz_form.npc_form": {
           "$title_panel": "common_dialogs.standard_title_label",
           "$title_size": ["100% - 14px", 10],
-          "size": ["340px", "124px"],
-          "$text_name": "Yuri Zxra",
+          "size": ["320px + 10%", "100px"],
+          "$text_name": "§lYuri Zxra",
           "$title_text_binding_type": "none",
-          "$child_control": "server_form.yuri_panel",
+          "$child_control": "cz_form.npc_scrolling_form",
           "layer": 2,
-          "alpha": 0.8,
           "bindings": [
             {
               "binding_name": "#gamertag",
@@ -99,13 +98,13 @@
         }
       },
       {
-        "cz_form4@cz_common.yuri_panel_ui": {
+        "cz_form4@cz_form.npc_form": {
           "$title_panel": "common_dialogs.standard_title_label",
           "$title_size": ["100% - 14px", 10],
-          "size": ["340px", "124px"],
-          "$text_name": "Yuri Zxra",
+          "size": ["320px + 10%", "100px"],
+          "$text_name": "§lYuri Zxra",
           "$title_text_binding_type": "none",
-          "$child_control": "server_form.yuri_panel",
+          "$child_control": "cz_form.npc_scrolling_form",
           "$display": "textures/cz/art/yuri/skin/combat",
           "layer": 2,
           "alpha": 0.8,
@@ -127,13 +126,13 @@
         }
       },
       {
-        "cz_form5@cz_common.yuri_panel_ui": {
+        "cz_form5@cz_form.npc_form": {
           "$title_panel": "common_dialogs.standard_title_label",
           "$title_size": ["100% - 14px", 10],
-          "size": ["340px", "124px"],
-          "$text_name": "Yuri Zxra",
+          "size": ["320px + 10%", "100px"],
+          "$text_name": "§lYuri Zxra",
           "$title_text_binding_type": "none",
-          "$child_control": "server_form.yuri_panel",
+          "$child_control": "cz_form.npc_scrolling_form",
           "$display": "textures/cz/art/yuri/skin/cheerleader",
           "layer": 2,
           "alpha": 0.8,
@@ -243,13 +242,13 @@
         }
       },
       {
-        "cz_form10@cz_common.iyura_panel_ui": {
+        "cz_form10@cz_form.npc_form": {
           "$title_panel": "common_dialogs.standard_title_label",
           "$title_size": ["100% - 14px", 10],
-          "size": ["340px", "120px"],
-          "$text_name": "Iyura Ikkinami",
+          "size": ["320px + 10%", "100px"],
+          "$text_name": "§lIyura Ikkinami",
           "$title_text_binding_type": "none",
-          "$child_control": "server_form.yuri_panel",
+          "$child_control": "cz_form.npc_scrolling_form",
           "$display": "textures/cz/art/iyura/skin/normal",
           "layer": 2,
           "alpha": 0.8,
@@ -271,13 +270,13 @@
         }
       },
       {
-        "cz_form11@cz_common.iyura_panel_ui": {
+        "cz_form11@cz_form.npc_form": {
           "$title_panel": "common_dialogs.standard_title_label",
           "$title_size": ["100% - 14px", 10],
           "size": ["340px", "120px"],
           "$text_name": "Iyura Ikkinami",
           "$title_text_binding_type": "none",
-          "$child_control": "server_form.yuri_panel",
+          "$child_control": "cz_form.npc_scrolling_form",
           "$display": "textures/cz/art/iyura/skin/normal_1",
           "layer": 2,
           "alpha": 0.8,
@@ -438,7 +437,7 @@
               "image": {
                 "type": "image",
                 "layer": 6,
-                "anchor_from": "left",
+                "anchor_from": "left_middle",
                 "size": ["69px", "119px"],
                 "bindings": [
                   {
@@ -646,7 +645,7 @@
         }
       },
       {
-        "form_button@cz_common.cz_dark_button": {
+        "form_button@cz_commons.dark_button": {
           "$pressed_button_name": "button.form_button_click",
           "anchor_from": "top_left",
           "anchor_to": "top_left",
@@ -771,30 +770,6 @@
               "shop_dynamic_buttons_panel@server_form.user_dynamic_buttons_panel": {}
             }
           ]
-        }
-      }
-    ]
-  },
-
-  "yuri_panel": {
-    "type": "panel",
-    "size": ["100%", "100%"],
-    "layer": 1,
-    "anchor_from": "bottom_middle",
-    "anchor_to": "bottom_middle",
-    "offset": ["0px", "20%"],
-    "controls": [
-      {
-        "scrolling_panel@common.scrolling_panel": {
-          "anchor_to": "top_left",
-          "anchor_from": "top_left",
-          "$show_background": false,
-          "size": ["100%", "100%"],
-          "$scrolling_content": "server_form.long_form_scrolling_content",
-          "$scroll_size": [5, "100% - 4px"],
-          "$scrolling_pane_size": ["100% - 4px", "100% - 2px"],
-          "$scrolling_pane_offset": [2, 0],
-          "$scroll_bar_right_padding_size": [0, 0]
         }
       }
     ]
